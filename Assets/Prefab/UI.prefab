@@ -796,14 +796,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnables:
   - id: 0
-    prefab: {fileID: 0}
+    prefab: {fileID: 653721731846068607, guid: 068ad769e69ac8840bb6e6b5281891d6, type: 3}
     cost: 1
   - id: 1
-    prefab: {fileID: 0}
+    prefab: {fileID: 7730144545908941707, guid: 5b0f38508e32f3e479061a4d65055369, type: 3}
     cost: 3
   - id: 2
-    prefab: {fileID: 0}
-    cost: 5
+    prefab: {fileID: 7113692720510884148, guid: 6978eb3abebe69e42ab51e501393e64b, type: 3}
+    cost: 40
   spawnLocation: {fileID: 8707857391171224762}
   moneyManager: {fileID: 6306325020306891331}
 --- !u!114 &6306325020306891331

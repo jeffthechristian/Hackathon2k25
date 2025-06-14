@@ -2697,11 +2697,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1284408717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &470192131 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 653721731846068607, guid: 068ad769e69ac8840bb6e6b5281891d6, type: 3}
-  m_PrefabInstance: {fileID: 4040987111674305852}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &474112463
 GameObject:
   m_ObjectHideFlags: 0
@@ -11461,11 +11456,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1022214310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2062595449 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7730144545908941707, guid: 5b0f38508e32f3e479061a4d65055369, type: 3}
-  m_PrefabInstance: {fileID: 7701285972327312994}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2070785048
 GameObject:
   m_ObjectHideFlags: 0
@@ -12108,18 +12098,6 @@ PrefabInstance:
     - target: {fileID: 4823471523606345486, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[0].prefab
-      value: 
-      objectReference: {fileID: 470192131}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[1].prefab
-      value: 
-      objectReference: {fileID: 2062595449}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[2].prefab
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5774426547338257704, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: m_Name
