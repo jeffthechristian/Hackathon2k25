@@ -17,6 +17,7 @@ public class GoatGrenade : MonoBehaviour
     public float explosionRadius = 5f;
     public AnimationCurve damageFalloff = AnimationCurve.Linear(0, 1, 1, 0);
     public float throwThreshold = 1.5f; // Velocity threshold for a throw (m/s)
+    public GameObject explosionParticlePrefab; // Reference to particle effect prefab
 
     private AudioSource audioSource;
     private Rigidbody rb;
@@ -89,6 +90,14 @@ public class GoatGrenade : MonoBehaviour
         {
             audioSource.pitch = 1f;
             audioSource.PlayOneShot(explosionSound);
+        }
+
+        // Spawn particle effect
+        if (explosionParticlePrefab != null)
+        {
+            GameObject particleInstance = Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
+            // Destroy particle after 3 seconds
+            Destroy(particleInstance, 3f);
         }
 
         if (selectedGoat != null)

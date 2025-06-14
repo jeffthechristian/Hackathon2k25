@@ -629,6 +629,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   throwThreshold: 1.5
+  explosionParticlePrefab: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!114 &8441238761955708363
 MonoBehaviour:
   m_ObjectHideFlags: 0
