@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3821032975286444058}
   - component: {fileID: -2648595567005001996}
   - component: {fileID: 4537119571093505990}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VomitCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
