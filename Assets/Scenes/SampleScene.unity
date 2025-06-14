@@ -12281,6 +12281,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1128445099997484827, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
+      propertyPath: m_text
+      value: Spawn Next Wave
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128445099997484827, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1918299262775174615, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
