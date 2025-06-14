@@ -15,6 +15,9 @@ TagManager:
   - QDSUIToggleBorderlessButton
   - QDSUIIcon
   - QDSUITextSecondaryColor
+  - QDSUIBackplateGradient
+  - Ground
+  - Turret
   layers:
   - Default
   - TransparentFX
