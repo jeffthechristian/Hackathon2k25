@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 3f1827c2-c682-46d8-999e-0954e37e833e
-  instanceId: f81caedd-00d3-4d9a-b45e-e6ad1411e1f9
+  instanceId: 66360f02-1c74-4f40-8a38-6c64a4b87ec5
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 20b9ad69-c205-488d-a6b2-d3d7ca6c1e53
@@ -429,7 +429,7 @@ Transform:
   m_GameObject: {fileID: 5480775565136021552}
   serializedVersion: 2
   m_LocalRotation: {x: -0.09027263, y: -0, z: -8.1490714e-10, w: 0.9959171}
-  m_LocalPosition: {x: -0, y: -0.83, z: 3.96}
+  m_LocalPosition: {x: 0, y: -1.52, z: 4.74}
   m_LocalScale: {x: 0.60499996, y: 0.605, z: 0.605}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -490,7 +490,7 @@ MonoBehaviour:
   shootPower: 25
   range: 20
   fireRate: 1
-  bulletPrefab: {fileID: 5008713993564532446, guid: 37bdef43def3ec441a3f84eb204f8aa0, type: 3}
+  bulletPrefab: {fileID: 1267530810612039697, guid: d494a1879c876144e90110d17d285f3f, type: 3}
   firePoint: {fileID: 5572996185581812042}
   shootSFX: {fileID: 8300000, guid: ff8b2ae107c326c4f9b0d9e168ad9785, type: 3}
 --- !u!114 &4487850197778547537

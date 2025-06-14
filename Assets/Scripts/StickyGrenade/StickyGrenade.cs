@@ -33,6 +33,7 @@ public class StickyGrenade : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (isStuck) return;
+
         if (!collision.collider.CompareTag("Ground") && !collision.collider.CompareTag("Enemy"))
         {
             Debug.Log("Ignored collision with: " + collision.collider.name);
@@ -40,11 +41,16 @@ public class StickyGrenade : MonoBehaviour
         }
 
         isStuck = true;
+
+        // Reparent the grenade to the object it hits
+        transform.SetParent(collision.transform);
+
+        // Stop movement and physics
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        // Play splat
+        // Play splatter sound
         if (splatterSound)
         {
             audioSource.pitch = Random.Range(0.85f, 1.15f);
