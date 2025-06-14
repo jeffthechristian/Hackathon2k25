@@ -78,12 +78,19 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy(float healthMultiplier)
     {
-        // Calculate random spawn position within the radius
-        Vector2 randomCircle = Random.insideUnitCircle.normalized * Random.Range(minSpawnRadius, maxSpawnRadius);
+        // Calculate random angle for a 180-degree arc (e.g., from 0 to 180 degrees)
+        float angle = Random.Range(0f, 180f) * Mathf.Deg2Rad; // Convert degrees to radians
+        float spawnRadius = Random.Range(minSpawnRadius, maxSpawnRadius);
+
+        // Calculate spawn position using the angle and radius
+        Vector2 spawnOffset = new Vector2(
+            Mathf.Cos(angle) * spawnRadius,
+            Mathf.Sin(angle) * spawnRadius
+        );
         Vector3 spawnPosition = new Vector3(
-            target.position.x + randomCircle.x,
+            target.position.x + spawnOffset.x,
             target.position.y, // Assumes enemies spawn at same height as target
-            target.position.z + randomCircle.y
+            target.position.z + spawnOffset.y
         );
 
         // Instantiate enemy
