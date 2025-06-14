@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI; // Optional: For NavMesh movement
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,17 +8,17 @@ public class Enemy : MonoBehaviour
     public MoneyManager moneyManager;
     public float meleeRange = 2f;
     public float moveSpeed = 5f;
-    public float attackCooldown = 2f; // Cooldown between attacks
-    public float tauntCooldown = 5f; // Cooldown between taunts
-    public float tauntChance = 0.2f; // 20% chance to taunt after attack
+    public float attackCooldown = 2f;
+    public float tauntCooldown = 5f;
+    public float tauntChance = 0.2f;
     public GameObject meleeHitbox;
     public AudioClip tauntAudioClip;
     public float tauntVolume = 1f;
 
     private Animator animator;
     private NavMeshAgent agent;
-    private Transform target;
     private AudioSource audioSource;
+    private Transform target;
     private float attackTimer;
     private float tauntTimer;
     private bool isAttacking;
@@ -103,16 +103,33 @@ public class Enemy : MonoBehaviour
         health -= amount;
         Debug.Log($"{gameObject.name} took {amount} damage. Remaining Health: {health}");
 
-        if (health <= 0)
+        if (health > 0)
+        {
+            StartCoroutine(PlayDamageAnimation());
+        }
+        else
         {
             StartCoroutine(Die());
         }
+    }
+
+    IEnumerator PlayDamageAnimation()
+    {
+        isAttacking = true; // Pause movement and other actions
+        if (agent) agent.SetDestination(transform.position); // Stop NavMeshAgent
+        animator.SetBool("IsRunning", false); // Stop running animation
+        animator.SetTrigger("TakeDamage"); // Trigger damage animation
+
+        // Wait for the damage animation to finish
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        isAttacking = false; // Resume normal behavior
     }
 
     IEnumerator Die()
     {
         isAttacking = true;
         animator.SetTrigger("Die");
+        if (agent) agent.SetDestination(transform.position); // Stop movement
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         moneyManager.AddMoney(10);
         Destroy(gameObject);
@@ -139,10 +156,12 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
     }
+
     public void ApplySlow(float slowAmount, float duration)
     {
-        StopCoroutine("RemoveSlow"); // prevent stacking slow resets
+        StopCoroutine("RemoveSlow"); // Prevent stacking slow resets
         moveSpeed = Mathf.Max(0, moveSpeed - slowAmount);
+        if (agent) agent.speed = moveSpeed; // Update NavMeshAgent speed
         StartCoroutine(RemoveSlow(slowAmount, duration));
     }
 
@@ -151,6 +170,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(duration);
         moveSpeed += slowAmount;
         moveSpeed = Mathf.Min(moveSpeed, originalSpeed);
+        if (agent) agent.speed = moveSpeed; // Restore NavMeshAgent speed
     }
 
     void OnAttackHitboxEvent(bool enable)
