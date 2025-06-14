@@ -3869,7 +3869,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.133, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 751450626}
@@ -12323,37 +12323,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[3].id
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[3].cost
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[1].prefab
-      value: 
-      objectReference: {fileID: 7516260384381336538, guid: 83d8af2031a2b5a47b0d23f558578e71, type: 3}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[2].prefab
-      value: 
-      objectReference: {fileID: 6580486056035847033, guid: ea1f2cffddacbe049b091ef12c90cea3, type: 3}
-    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: spawnables.Array.data[3].prefab
-      value: 
-      objectReference: {fileID: 3586586931337588141, guid: a133963b9aa61634ead74afe9f75b4ba, type: 3}
     - target: {fileID: 5774426547338257704, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: m_Name
       value: ShopUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6306325020306891331, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
-      propertyPath: startingMoney
-      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 7376818860215165491, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: m_AnchorMax.y
