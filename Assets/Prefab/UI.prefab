@@ -1303,6 +1303,9 @@ MonoBehaviour:
   - id: 3
     prefab: {fileID: 3586586931337588141, guid: a133963b9aa61634ead74afe9f75b4ba, type: 3}
     cost: 50
+  - id: 4
+    prefab: {fileID: 3939550605581944243, guid: 98b6c8840f2bae141adf8cca57ecc720, type: 3}
+    cost: 50
   spawnLocation: {fileID: 8707857391171224762}
   moneyManager: {fileID: 6306325020306891331}
 --- !u!114 &6306325020306891331
