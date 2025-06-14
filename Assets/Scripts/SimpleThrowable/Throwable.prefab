@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 7358e191-33b7-43ca-b066-b2f00531ac66
-  instanceId: 3b37f5ad-5b59-4ca9-a8b1-c74a2f8fa51d
+  instanceId: 4e821e87-db28-4b8d-b791-54dd17180afe
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -125,7 +125,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 3f1827c2-c682-46d8-999e-0954e37e833e
-  instanceId: 90312de4-f001-4be2-9e38-2d1ecb7ca5d4
+  instanceId: 8065f281-6b45-47d7-b93a-26fe0cfd3c5c
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 20b9ad69-c205-488d-a6b2-d3d7ca6c1e53
