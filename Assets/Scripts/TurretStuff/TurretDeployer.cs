@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Oculus.Interaction;
 
 public class TurretDeployer : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class TurretDeployer : MonoBehaviour
             Debug.Log("Turret deployed!");
 
             // Disable grabbing after deployment
-            var grab = GetComponent<OVRGrabbable>();
+            var grab = GetComponent<Grabbable>();
             if (grab != null) grab.enabled = false;
 
             // Freeze physics

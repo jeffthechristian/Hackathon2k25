@@ -53,6 +53,7 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null)
         {
             Vector3 dir = (nearestEnemy.position - transform.position).normalized;
+            dir.y = 0; // Ignore Y difference to lock rotation to Y axis
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
 
