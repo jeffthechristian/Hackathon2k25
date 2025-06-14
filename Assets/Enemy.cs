@@ -22,12 +22,14 @@ public class Enemy : MonoBehaviour
     private float attackTimer;
     private float tauntTimer;
     private bool isAttacking;
+    private float originalSpeed;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
+        originalSpeed = moveSpeed;
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -136,6 +138,19 @@ public class Enemy : MonoBehaviour
         }
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
+    }
+    public void ApplySlow(float slowAmount, float duration)
+    {
+        StopCoroutine("RemoveSlow"); // prevent stacking slow resets
+        moveSpeed = Mathf.Max(0, moveSpeed - slowAmount);
+        StartCoroutine(RemoveSlow(slowAmount, duration));
+    }
+
+    IEnumerator RemoveSlow(float slowAmount, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        moveSpeed += slowAmount;
+        moveSpeed = Mathf.Min(moveSpeed, originalSpeed);
     }
 
     void OnAttackHitboxEvent(bool enable)
