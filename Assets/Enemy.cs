@@ -25,9 +25,11 @@ public class Enemy : MonoBehaviour
     private bool isAttacking;
     private float originalSpeed;
     private EnemySpawner spawner;
-    private bool isAttracted; // Tracks if enemy is attracted to bait
-    private Vector3 attractionPoint; // Position of the bait
-    private float attractionTimer; // Time remaining for attraction
+    private bool isAttracted;
+    private Vector3 attractionPoint;
+    private float attractionTimer;
+    private bool isDead;
+    private bool isDrinking;
 
     void Start()
     {
@@ -45,6 +47,8 @@ public class Enemy : MonoBehaviour
         tauntTimer = 0f;
         isAttracted = false;
         attractionTimer = 0f;
+        isDead = false;
+        isDrinking = false;
 
         animator.SetBool("IsRunning", true);
         animator.SetBool("IsInMeleeRange", false);
@@ -52,42 +56,45 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (isAttacking || health <= 0f) return; // Skip if attacking or dead
+        if (isAttacking || isDead || isDrinking) return; // Skip if attacking, dead, or drinking
 
-        // Update timers
         attackTimer -= Time.deltaTime;
         tauntTimer -= Time.deltaTime;
 
-        // Handle attraction timer
         if (isAttracted)
         {
             attractionTimer -= Time.deltaTime;
             if (attractionTimer <= 0f)
             {
-                isAttracted = false; // End attraction
+                isAttracted = false;
+            }
+
+            // Check if enemy has reached the attraction point
+            float distanceToAttraction = Vector3.Distance(transform.position, attractionPoint);
+            if (distanceToAttraction <= 0.5f) // Adjust threshold as needed
+            {
+                Debug.Log($"{gameObject.name} reached attraction point, triggering Drink animation");
+                StartCoroutine(PlayDrinkAnimation());
+                return; // Exit Update to prevent further movement or attacks
             }
         }
 
-        // Determine current target position
         Vector3 currentTargetPos = isAttracted ? attractionPoint : target.position;
         float distanceToTarget = Vector3.Distance(transform.position, currentTargetPos);
         bool inMeleeRange = distanceToTarget <= meleeRange;
 
-        // Update animator parameters
         animator.SetBool("IsInMeleeRange", inMeleeRange);
 
-        if (inMeleeRange)
+        if (inMeleeRange && !isAttracted) // Only allow melee attacks when not attracted
         {
-            // Stop moving
             if (agent) agent.SetDestination(transform.position);
             animator.SetBool("IsRunning", false);
 
-            // Attack if cooldown is ready
             if (attackTimer <= 0f)
             {
+                Debug.Log($"{gameObject.name} initiating MeleeAttack");
                 StartCoroutine(PlayMeleeAttack());
                 attackTimer = attackCooldown;
-                // Random chance to taunt after attack
                 if (Random.value < tauntChance && tauntTimer <= 0f)
                 {
                     StartCoroutine(PlayTaunt());
@@ -97,7 +104,6 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            // Move toward current target
             animator.SetBool("IsRunning", true);
             Vector3 dir = (currentTargetPos - transform.position).normalized;
             dir.y = 0;
@@ -118,21 +124,24 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        if (isDead) return;
+
         health -= amount;
         Debug.Log($"{gameObject.name} took {amount} damage. Remaining Health: {health}");
 
-        if (health > 0)
+        if (health <= 0f)
         {
-            StartCoroutine(PlayDamageAnimation());
+            StartCoroutine(Die());
         }
         else
         {
-            StartCoroutine(Die());
+            StartCoroutine(PlayDamageAnimation());
         }
     }
 
     IEnumerator PlayDamageAnimation()
     {
+        if (isDead) yield break;
         isAttacking = true;
         if (agent) agent.SetDestination(transform.position);
         animator.SetBool("IsRunning", false);
@@ -144,11 +153,16 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
+        if (isDead) yield break;
+        isDead = true;
         isAttacking = true;
-        isAttracted = false; // Stop attraction on death
+        isAttracted = false;
+        isDrinking = false;
         animator.SetTrigger("Die");
         if (agent) agent.SetDestination(transform.position);
+
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
         if (moneyManager != null) moneyManager.AddMoney(10);
         if (spawner != null) spawner.EnemyDied();
         Destroy(gameObject);
@@ -156,6 +170,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator PlayMeleeAttack()
     {
+        if (isDead) yield break;
         isAttacking = true;
         animator.SetTrigger("MeleeAttack");
         if (meleeHitbox) meleeHitbox.SetActive(true);
@@ -166,6 +181,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator PlayTaunt()
     {
+        if (isDead) yield break;
         isAttacking = true;
         animator.SetTrigger("Taunt");
         if (tauntAudioClips != null && tauntAudioClips.Count > 0)
@@ -177,8 +193,24 @@ public class Enemy : MonoBehaviour
         isAttacking = false;
     }
 
+    IEnumerator PlayDrinkAnimation()
+    {
+        if (isDead) yield break;
+        isDrinking = true;
+        if (agent) agent.SetDestination(transform.position); // Stop movement
+        animator.SetBool("IsRunning", false);
+        animator.SetTrigger("Drink");
+        Debug.Log($"{gameObject.name} set Drink trigger");
+
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        isDrinking = false;
+        isAttracted = false; // Stop attraction after drinking
+        Debug.Log($"{gameObject.name} finished Drink animation");
+    }
+
     public void ApplySlow(float slowAmount, float duration)
     {
+        if (isDead) return;
         StopCoroutine("RemoveSlow");
         moveSpeed = Mathf.Max(0, moveSpeed - slowAmount);
         if (agent) agent.speed = moveSpeed;
@@ -195,8 +227,7 @@ public class Enemy : MonoBehaviour
 
     public void AttractTo(Vector3 position, float duration)
     {
-        if (health <= 0f) return; // Ignore if dead
-
+        if (isDead) return;
         isAttracted = true;
         attractionPoint = position;
         attractionTimer = duration;
