@@ -105,8 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2737d3faa1b111e41b64872028652a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuseTime: 3
-  explosionRadius: 5
+  fuseTime: 2
+  explosionRadius: 3
   damageFalloff:
     serializedVersion: 2
     m_Curve:
@@ -238,10 +238,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 5
+  MinDistance: 0
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -289,7 +289,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -476,10 +476,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 10
+  MinDistance: 0
+  MaxDistance: 30
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -527,7 +527,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -603,7 +603,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 21954543707cfb5449bf6b3431621d27, type: 3}
     baseDamage: 50
   explosionSound: {fileID: 8300000, guid: d2fb714fbca28504e86cc731cb90a0f0, type: 3}
-  explosionRadius: 5
+  explosionRadius: 4
   damageFalloff:
     serializedVersion: 2
     m_Curve:
