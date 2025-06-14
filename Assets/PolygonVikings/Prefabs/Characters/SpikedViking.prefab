@@ -3714,7 +3714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moneyManager: {fileID: 0}
-  meleeRange: 0.8
+  meleeRange: 1.2
   moveSpeed: 2
   attackCooldown: 2
   tauntCooldown: 3
