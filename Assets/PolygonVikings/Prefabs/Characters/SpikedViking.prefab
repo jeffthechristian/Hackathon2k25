@@ -3360,8 +3360,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7851539990542055655}
-  - component: {fileID: 8520602813857569112}
+  - component: {fileID: 7791428976789287830}
   - component: {fileID: 2752893675105461591}
+  - component: {fileID: 1135237364176446742}
   m_Layer: 0
   m_Name: SpikedViking
   m_TagString: Enemy
@@ -3390,7 +3391,7 @@ Transform:
   - {fileID: 8889472469635183503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8520602813857569112
+--- !u!114 &7791428976789287830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3404,13 +3405,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moneyManager: {fileID: 0}
-  detectionRange: 30
+  detectionRange: 15
   meleeRange: 2
-  moveSpeed: 3
+  moveSpeed: 5
   runAttackCooldown: 2
   meleeComboCooldown: 3
-  tauntChance: 0.3
+  tauntChance: 0.1
   meleeHitbox: {fileID: 0}
+  tauntAudioClip: {fileID: 0}
+  tauntVolume: 1
 --- !u!95 &2752893675105461591
 Animator:
   serializedVersion: 7
@@ -3433,6 +3436,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &1135237364176446742
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112052222930420187}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &9144800584005600967
 GameObject:
   m_ObjectHideFlags: 0
