@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public MoneyManager moneyManager;
     public float health = 100f;
 
     public void TakeDamage(float amount)
@@ -19,6 +18,5 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
-        moneyManager.AddMoney(10);
     }
 }
