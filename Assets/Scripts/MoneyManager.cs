@@ -11,6 +11,12 @@ public class MoneyManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI moneyText;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip gainMoney;
+    [SerializeField] private AudioClip notEnough;
+    [SerializeField] private AudioClip itemBought;
+
     private void Start()
     {
         CurrentMoney = startingMoney;
@@ -22,6 +28,7 @@ public class MoneyManager : MonoBehaviour
         if (amount > CurrentMoney)
         {
             Debug.LogWarning("Attempted to spend more than available.");
+            PlaySound(notEnough);
             return false;
         }
 
@@ -34,6 +41,7 @@ public class MoneyManager : MonoBehaviour
     {
         CurrentMoney += amount;
         UpdateMoneyUI();
+        PlaySound(gainMoney);
     }
 
     private void UpdateMoneyUI()
@@ -45,6 +53,19 @@ public class MoneyManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Money Text UI not assigned.");
+        }
+    }
+
+    public void ObjectBought()
+    {
+        PlaySound(itemBought);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }
