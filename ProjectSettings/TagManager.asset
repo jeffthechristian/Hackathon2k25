@@ -18,6 +18,14 @@ TagManager:
   - QDSUIBackplateGradient
   - Ground
   - Turret
+  - QDSUISection
+  - QDSUITextInputField
+  - QDSUIToggleCheckboxRadio
+  - QDSUIPrimaryButton
+  - QDSUITextInvertedColor
+  - QDSUITextSecondaryInvertedColor
+  - QDSUIDestructiveButton
+  - Ring
   layers:
   - Default
   - TransparentFX
