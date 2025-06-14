@@ -10395,8 +10395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 9112052222930420187, guid: 5ce0416e1b4e8dd448f09358d1c9847f, type: 3}
-  minSpawnRadius: 5
-  maxSpawnRadius: 15
+  minSpawnRadius: 30
+  maxSpawnRadius: 40
   spawnRate: 5
   maxEnemies: 10
   moneyManager: {fileID: 9070258920096326728}
