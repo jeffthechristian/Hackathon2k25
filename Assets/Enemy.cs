@@ -15,8 +15,9 @@ public class Enemy : MonoBehaviour
     public GameObject meleeHitbox;
     public List<AudioClip> tauntAudioClips;
     public float tauntVolume = 1f;
-    // NEW: Damage dealt to wall
     public float wallDamage = 10f;
+    public float ringDamage = 10f;
+
 
     private Animator animator;
     private NavMeshAgent agent;
@@ -32,7 +33,6 @@ public class Enemy : MonoBehaviour
     private float attractionTimer;
     private bool isDead;
     private bool isDrinking;
-    // NEW: Track wall target
     private WallSection wallTarget;
 
     void Start()
@@ -83,12 +83,10 @@ public class Enemy : MonoBehaviour
         }
 
         Vector3 currentTargetPos = isAttracted ? attractionPoint : target.position;
-        // NEW: Check if path to target exists
         bool hasPath = HasPathTo(currentTargetPos);
 
         if (!hasPath && wallTarget == null)
         {
-            // Find nearest wall section
             wallTarget = FindNearestWallSection();
             if (wallTarget != null)
             {
@@ -96,7 +94,6 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        // NEW: Decide target based on path availability
         Transform attackTarget = wallTarget != null ? wallTarget.transform : null;
         Vector3 finalTargetPos = wallTarget != null ? wallTarget.transform.position : currentTargetPos;
         float distanceToTarget = Vector3.Distance(transform.position, finalTargetPos);
@@ -141,7 +138,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // NEW: Check if path exists to target
     private bool HasPathTo(Vector3 targetPos)
     {
         if (agent == null) return false;
@@ -151,7 +147,6 @@ public class Enemy : MonoBehaviour
         return pathFound && path.status == NavMeshPathStatus.PathComplete;
     }
 
-    // NEW: Find nearest wall section
     private WallSection FindNearestWallSection()
     {
         WallSection[] wallSections = FindObjectsOfType<WallSection>();
@@ -217,7 +212,6 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // MODIFIED: Added parameter to handle wall damage
     IEnumerator PlayMeleeAttack(Transform attackTarget)
     {
         if (isDead) yield break;
@@ -227,12 +221,16 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         if (meleeHitbox) meleeHitbox.SetActive(false);
 
-        // NEW: Apply damage to wall if targeting a wall section
         if (attackTarget != null && attackTarget.GetComponent<WallSection>() != null)
         {
             WallSection section = attackTarget.GetComponent<WallSection>();
             section.TakeDamage(wallDamage);
-            Debug.Log($"{gameObject.name} dealt {wallDamage} damage to wall section {section.name}");
+        }
+
+        if (attackTarget != null && attackTarget.GetComponent<RingLogic>() != null)
+        {
+            RingLogic section = attackTarget.GetComponent<RingLogic>();
+            section.TakeDamage(ringDamage);
         }
 
         isAttacking = false;
@@ -290,7 +288,6 @@ public class Enemy : MonoBehaviour
         isAttracted = true;
         attractionPoint = position;
         attractionTimer = duration;
-        // NEW: Reset wall target when attracted
         wallTarget = null;
         Debug.Log($"{gameObject.name} is attracted to {position} for {duration} seconds");
     }
