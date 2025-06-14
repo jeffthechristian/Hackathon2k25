@@ -3405,9 +3405,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moneyManager: {fileID: 0}
-  meleeRange: 3
+  meleeRange: 0.8
   moveSpeed: 5
+  attackCooldown: 2
   tauntCooldown: 3
+  tauntChance: 0.2
   meleeHitbox: {fileID: 0}
   tauntAudioClip: {fileID: 0}
   tauntVolume: 1
