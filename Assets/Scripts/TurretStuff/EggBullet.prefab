@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4207274171964196016}
   - component: {fileID: 2724342455992646811}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: EggBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  shootSFX: {fileID: 8300000, guid: 9aa9cec1648b3be4fabe9dc1ebd4237c, type: 3}
 --- !u!54 &2724342455992646811
 Rigidbody:
   m_ObjectHideFlags: 0
