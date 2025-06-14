@@ -6,22 +6,21 @@ public class Enemy : MonoBehaviour
 {
     public float health = 100f;
     public MoneyManager moneyManager;
-    public float detectionRange = 15f;
     public float meleeRange = 2f;
     public float moveSpeed = 5f;
-    public float runAttackCooldown = 2f;
-    public float meleeComboCooldown = 3f;
-    public float tauntChance = 0.1f; 
-    public GameObject meleeHitbox; 
-    public AudioClip tauntAudioClip; 
-    public float tauntVolume = 1f; 
+    public float attackCooldown = 2f; // Cooldown between attacks
+    public float tauntCooldown = 5f; // Cooldown between taunts
+    public float tauntChance = 0.2f; // 20% chance to taunt after attack
+    public GameObject meleeHitbox;
+    public AudioClip tauntAudioClip;
+    public float tauntVolume = 1f;
 
     private Animator animator;
-    private NavMeshAgent agent; 
+    private NavMeshAgent agent;
     private Transform target;
-    private AudioSource audioSource; 
-    private float runAttackTimer;
-    private float meleeComboTimer;
+    private AudioSource audioSource;
+    private float attackTimer;
+    private float tauntTimer;
     private bool isAttacking;
 
     void Start()
@@ -34,10 +33,10 @@ public class Enemy : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         target = GameObject.FindGameObjectWithTag("Ring").transform;
-        runAttackTimer = runAttackCooldown;
-        meleeComboTimer = meleeComboCooldown;
+        attackTimer = 0f;
+        tauntTimer = 0f;
 
-        animator.SetBool("IsTargetDetected", false);
+        animator.SetBool("IsRunning", true);
         animator.SetBool("IsInMeleeRange", false);
     }
 
@@ -45,63 +44,55 @@ public class Enemy : MonoBehaviour
     {
         if (isAttacking || health <= 0f) return; // Skip if attacking or dead
 
-        // Update cooldowns
-        runAttackTimer -= Time.deltaTime;
-        meleeComboTimer -= Time.deltaTime;
+        // Update timers
+        attackTimer -= Time.deltaTime;
+        tauntTimer -= Time.deltaTime;
 
-        // Detect target
+        // Calculate distance to target
         float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        bool targetDetected = distanceToTarget <= detectionRange && target != null;
         bool inMeleeRange = distanceToTarget <= meleeRange;
 
         // Update animator parameters
-        animator.SetBool("IsTargetDetected", targetDetected);
         animator.SetBool("IsInMeleeRange", inMeleeRange);
 
-        if (targetDetected)
+        if (inMeleeRange)
         {
-            // Face target
-            Vector3 dir = (target.position - transform.position).normalized;
-            dir.y = 0;
-            Quaternion lookRot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
+            // Stop moving
+            if (agent) agent.SetDestination(transform.position);
+            else transform.position = transform.position;
 
-            // Random taunt when not in melee range
-            if (Random.value < tauntChance && !inMeleeRange && runAttackTimer <= 0f)
+            animator.SetBool("IsRunning", false);
+            // Attack if cooldown is ready
+            if (attackTimer <= 0f)
             {
-                StartCoroutine(PlayTaunt());
-                return;
-            }
-
-            if (inMeleeRange)
-            {
-                // Stop moving
-                if (agent) agent.SetDestination(transform.position);
-                else transform.position = transform.position;
-
-                // Melee combo
-                if (meleeComboTimer <= 0f)
+                StartCoroutine(PlayMeleeAttack());
+                attackTimer = attackCooldown;
+                // Random chance to taunt after attack
+                if (Random.value < tauntChance && tauntTimer <= 0f)
                 {
-                    StartCoroutine(PlayMeleeCombo());
-                    meleeComboTimer = meleeComboCooldown;
-                }
-            }
-            else
-            {
-                if (agent)
-                {
-                    agent.SetDestination(target.position);
-                    agent.speed = moveSpeed;
-                }
-                else
-                {
-                    transform.position += dir * moveSpeed * Time.deltaTime;
+                    StartCoroutine(PlayTaunt());
+                    tauntTimer = tauntCooldown;
                 }
             }
         }
         else
         {
-            if (agent) agent.SetDestination(transform.position);
+            // Move toward target
+            animator.SetBool("IsRunning", true);
+            Vector3 dir = (target.position - transform.position).normalized;
+            dir.y = 0;
+            Quaternion lookRot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
+
+            if (agent)
+            {
+                agent.SetDestination(target.position);
+                agent.speed = moveSpeed;
+            }
+            else
+            {
+                transform.position += dir * moveSpeed * Time.deltaTime;
+            }
         }
     }
 
@@ -118,18 +109,20 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
-        isAttacking = true; 
+        isAttacking = true;
         animator.SetTrigger("Die");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         moneyManager.AddMoney(10);
         Destroy(gameObject);
     }
 
-    IEnumerator PlayMeleeCombo()
+    IEnumerator PlayMeleeAttack()
     {
         isAttacking = true;
-        animator.Play("MeleeCombo");
+        animator.SetTrigger("MeleeAttack");
+        if (meleeHitbox) meleeHitbox.SetActive(true);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        if (meleeHitbox) meleeHitbox.SetActive(false);
         isAttacking = false;
     }
 

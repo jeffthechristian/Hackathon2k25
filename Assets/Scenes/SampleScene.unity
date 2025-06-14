@@ -603,10 +603,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1738258448}
     m_Modifications:
-    - target: {fileID: 1135237364176446742, guid: 5ce0416e1b4e8dd448f09358d1c9847f, type: 3}
-      propertyPath: m_Speed
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 7791428976789287830, guid: 5ce0416e1b4e8dd448f09358d1c9847f, type: 3}
       propertyPath: moneyManager
       value: 

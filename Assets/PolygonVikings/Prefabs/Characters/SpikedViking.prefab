@@ -3405,12 +3405,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moneyManager: {fileID: 0}
-  detectionRange: 15
-  meleeRange: 2
+  meleeRange: 3
   moveSpeed: 5
-  runAttackCooldown: 2
-  meleeComboCooldown: 3
-  tauntChance: 0.1
+  tauntCooldown: 3
   meleeHitbox: {fileID: 0}
   tauntAudioClip: {fileID: 0}
   tauntVolume: 1
@@ -3446,7 +3443,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 0.1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
