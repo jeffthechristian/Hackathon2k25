@@ -4,10 +4,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab; // The Enemy prefab to spawn
-    public float minSpawnRadius = 5f; // Minimum distance from target to spawn
-    public float maxSpawnRadius = 15f; // Maximum distance from target to spawn
     public MoneyManager moneyManager; // Reference to MoneyManager
-
+    public Transform[] spawnPointTransforms; // Assign spawn point GameObjects in the Inspector
+    private Vector3[] spawnPoints; // Internal array for spawn positions
     private Transform target; // The target object (Ring)
     private int currentWave = 0; // Current wave number (0 means no wave active)
     private int currentEnemyCount = 0; // Track active enemies
@@ -25,6 +24,33 @@ public class EnemySpawner : MonoBehaviour
             Debug.LogError("Ring not found! Please ensure an object with tag 'Ring' exists.");
             return;
         }
+
+        // Initialize spawn points from assigned transforms
+        InitializeSpawnPoints();
+    }
+
+    void InitializeSpawnPoints()
+    {
+        if (spawnPointTransforms == null || spawnPointTransforms.Length == 0)
+        {
+            Debug.LogError("No spawn points assigned! Please assign spawn points in the Inspector.");
+            spawnPoints = new Vector3[0];
+            return;
+        }
+
+        spawnPoints = new Vector3[spawnPointTransforms.Length];
+        for (int i = 0; i < spawnPointTransforms.Length; i++)
+        {
+            if (spawnPointTransforms[i] != null)
+            {
+                spawnPoints[i] = spawnPointTransforms[i].position;
+            }
+            else
+            {
+                Debug.LogWarning($"Spawn point {i} is not assigned!");
+                spawnPoints[i] = target.position; // Fallback to target position
+            }
+        }
     }
 
     // Public method to start the next wave
@@ -33,6 +59,12 @@ public class EnemySpawner : MonoBehaviour
         if (isWaveActive)
         {
             Debug.Log("Cannot start new wave: Current wave still active!");
+            return;
+        }
+
+        if (spawnPoints.Length == 0)
+        {
+            Debug.LogError("Cannot start wave: No valid spawn points available!");
             return;
         }
 
@@ -78,13 +110,8 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy(float healthMultiplier)
     {
-        // Calculate random spawn position within the radius
-        Vector2 randomCircle = Random.insideUnitCircle.normalized * Random.Range(minSpawnRadius, maxSpawnRadius);
-        Vector3 spawnPosition = new Vector3(
-            target.position.x + randomCircle.x,
-            target.position.y, // Assumes enemies spawn at same height as target
-            target.position.z + randomCircle.y
-        );
+        // Select a random spawn point from predefined positions
+        Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // Instantiate enemy
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
