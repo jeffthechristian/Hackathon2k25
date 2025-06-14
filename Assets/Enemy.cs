@@ -195,7 +195,7 @@ public class Enemy : MonoBehaviour
 
     public void AttractTo(Vector3 position, float duration)
     {
-        if (health <= 0f || isAttacking) return; // Ignore if dead or attacking
+        if (health <= 0f) return; // Ignore if dead
 
         isAttracted = true;
         attractionPoint = position;
