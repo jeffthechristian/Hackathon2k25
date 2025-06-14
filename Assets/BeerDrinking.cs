@@ -14,16 +14,25 @@ public class BeerDrinking : MonoBehaviour
     private bool isInMouth = false;
     private float drinkingTime = 0f;
     private bool isVomiting = false;
+
     private AudioSource audioSource;
     private Transform headTransform;
+    private ParticleSystem vomitParticles;
+
+    private Coroutine vomitCoroutine;
 
     void Start()
     {
         GameObject headObj = GameObject.FindGameObjectWithTag("Head");
         if (headObj != null)
+        {
             headTransform = headObj.transform;
+            vomitParticles = headTransform.GetComponentInChildren<ParticleSystem>();
+        }
         else
+        {
             Debug.LogError("No object with tag 'Head' found!");
+        }
 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
@@ -36,7 +45,7 @@ public class BeerDrinking : MonoBehaviour
         {
             drinkingTime += Time.deltaTime;
 
-            if (!audioSource.isPlaying)
+            if (!audioSource.isPlaying || audioSource.clip != drinkingSound)
             {
                 audioSource.clip = drinkingSound;
                 audioSource.loop = true;
@@ -45,13 +54,13 @@ public class BeerDrinking : MonoBehaviour
 
             if (drinkingTime >= drinkDurationToVomit)
             {
-                StartCoroutine(VomitRoutine());
+                if (vomitCoroutine == null)
+                    vomitCoroutine = StartCoroutine(VomitRoutine());
             }
         }
-        else
+        else if (!isVomiting && audioSource.isPlaying && audioSource.clip == drinkingSound)
         {
-            if (audioSource.isPlaying && audioSource.clip == drinkingSound)
-                audioSource.Stop();
+            audioSource.Stop();
         }
     }
 
@@ -59,11 +68,17 @@ public class BeerDrinking : MonoBehaviour
     {
         isVomiting = true;
 
+        // Stop drinking sound
         audioSource.Stop();
 
+        // Start vomit sound (looped)
         audioSource.clip = vomitingSound;
         audioSource.loop = true;
         audioSource.Play();
+
+        // Start particles
+        if (vomitParticles != null)
+            vomitParticles.Play();
 
         float elapsed = 0f;
         while (elapsed < vomitDuration)
@@ -73,8 +88,22 @@ public class BeerDrinking : MonoBehaviour
             yield return new WaitForSeconds(vomitSpawnInterval);
         }
 
-        audioSource.Stop();
-        Destroy(gameObject);
+        // Cleanup and stop everything properly
+        CleanupVomit();
+
+        Destroy(gameObject); // Beer consumed
+    }
+
+    private void CleanupVomit()
+    {
+        if (audioSource != null)
+            audioSource.Stop();
+
+        if (vomitParticles != null && vomitParticles.isPlaying)
+            vomitParticles.Stop();
+
+        isVomiting = false;
+        vomitCoroutine = null;
     }
 
     private void SpawnVomitProjectile()
@@ -105,5 +134,10 @@ public class BeerDrinking : MonoBehaviour
             isInMouth = false;
             drinkingTime = 0f;
         }
+    }
+
+    private void OnDestroy()
+    {
+        CleanupVomit(); // Ensure things are stopped if object is destroyed mid-vomit
     }
 }
