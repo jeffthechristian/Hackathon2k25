@@ -933,7 +933,6 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 451f4b07f0a04a745bd614f97c1d8d7d, type: 3}
     baseDamage: 20
   splatterSound: {fileID: 8300000, guid: f00a39e76a4b45046a1821326c146cfb, type: 3}
-  explosionParticlePrefab: {fileID: 1547757601392324, guid: 6f672a31584a6a748912a49c1dce2f0c, type: 3}
 --- !u!114 &6912700642269308886
 MonoBehaviour:
   m_ObjectHideFlags: 0
