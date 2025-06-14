@@ -9863,6 +9863,7 @@ GameObject:
   - component: {fileID: 1742021134}
   - component: {fileID: 1742021133}
   - component: {fileID: 1742021137}
+  - component: {fileID: 1742021138}
   m_Layer: 0
   m_Name: RING
   m_TagString: Ring
@@ -9975,6 +9976,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 500
+--- !u!114 &1742021138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742021132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9825f3c21dbc39c47893210dd4733bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 9112052222930420187, guid: 5ce0416e1b4e8dd448f09358d1c9847f, type: 3}
+  minSpawnRadius: 5
+  maxSpawnRadius: 15
+  spawnRate: 5
+  maxEnemies: 10
+  moneyManager: {fileID: 9070258920096326728}
 --- !u!1 &1752111069
 GameObject:
   m_ObjectHideFlags: 0
