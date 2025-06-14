@@ -3562,6 +3562,7 @@ GameObject:
   - component: {fileID: 4257967848582920130}
   - component: {fileID: 4441175708753135877}
   - component: {fileID: 6376107348721252528}
+  - component: {fileID: 2580001480531370533}
   m_Layer: 0
   m_Name: Item_Sword
   m_TagString: Untagged
@@ -3637,6 +3638,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2580001480531370533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8841152604164823749}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 28.938107, y: 33.185276, z: 24.439072}
+  m_Center: {x: 21.644224, y: -21.216164, z: 0.31516477}
 --- !u!1 &9112052222930420187
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,12 +3715,24 @@ MonoBehaviour:
   health: 100
   moneyManager: {fileID: 0}
   meleeRange: 0.8
-  moveSpeed: 5
+  moveSpeed: 2
   attackCooldown: 2
   tauntCooldown: 3
   tauntChance: 0.2
-  meleeHitbox: {fileID: 0}
-  tauntAudioClip: {fileID: 0}
+  meleeHitbox: {fileID: 8841152604164823749}
+  tauntAudioClips:
+  - {fileID: 8300000, guid: bc039869c30183848ba92b7a29534318, type: 3}
+  - {fileID: 8300000, guid: 61140aa562c867e4aafbdc768b63815b, type: 3}
+  - {fileID: 8300000, guid: 7ed5ff0aede378e4abb9284fc456b5bc, type: 3}
+  - {fileID: 8300000, guid: 7ef97b9812cd1614daef803d832e723b, type: 3}
+  - {fileID: 8300000, guid: ee1ef4149cfe7374d8eacc965f5b32f5, type: 3}
+  - {fileID: 8300000, guid: a2e3c917d8d5e234fb2931abcbbadf24, type: 3}
+  - {fileID: 8300000, guid: 6c78cc63528bc5f409fc8a7c0e088878, type: 3}
+  - {fileID: 8300000, guid: 1b8bf33ddcc2ea746ac91b408adfa969, type: 3}
+  - {fileID: 8300000, guid: 82d61d4ced22c1046a3af2f5974c3299, type: 3}
+  - {fileID: 8300000, guid: 4ea760b454e5a8c4bb61d1c03a47fef0, type: 3}
+  - {fileID: 8300000, guid: 5f657b046461f1a4b96ef9345b3af423, type: 3}
+  - {fileID: 8300000, guid: 1dcd8939fbcb38348bdb181c81c03233, type: 3}
   tauntVolume: 1
 --- !u!95 &2752893675105461591
 Animator:
@@ -3732,7 +3766,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.1
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

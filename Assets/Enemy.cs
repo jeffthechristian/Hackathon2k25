@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     public float tauntCooldown = 5f;
     public float tauntChance = 0.2f;
     public GameObject meleeHitbox;
-    public AudioClip tauntAudioClip;
+    public List<AudioClip> tauntAudioClips; // List of taunt audio clips
     public float tauntVolume = 1f;
 
     private Animator animator;
@@ -152,9 +153,10 @@ public class Enemy : MonoBehaviour
     {
         isAttacking = true;
         animator.SetTrigger("Taunt");
-        if (tauntAudioClip != null)
+        if (tauntAudioClips != null && tauntAudioClips.Count > 0)
         {
-            audioSource.PlayOneShot(tauntAudioClip, tauntVolume);
+            AudioClip selectedTaunt = tauntAudioClips[Random.Range(0, tauntAudioClips.Count)];
+            audioSource.PlayOneShot(selectedTaunt, tauntVolume);
         }
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
