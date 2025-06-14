@@ -26,6 +26,7 @@ TagManager:
   - QDSUITextSecondaryInvertedColor
   - QDSUIDestructiveButton
   - Ring
+  - Head
   layers:
   - Default
   - TransparentFX
