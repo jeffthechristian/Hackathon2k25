@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 3551297657079661723}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.363, z: 1.123}
+  m_LocalPosition: {x: 0, y: 0.363, z: 1.349}
   m_LocalScale: {x: 0.1944541, y: 0.16270833, z: 0.67}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 7358e191-33b7-43ca-b066-b2f00531ac66
-  instanceId: e20836f1-e5dd-4b46-9e48-1a971cda4b6b
+  instanceId: b0ac6cfb-0f78-4f46-9675-29684aa42a6c
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 3f1827c2-c682-46d8-999e-0954e37e833e
-  instanceId: f6e6949e-748b-40a4-aa37-f271079956ec
+  instanceId: 55b3fabf-959e-4281-a4c6-d01373d49b94
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 20b9ad69-c205-488d-a6b2-d3d7ca6c1e53
