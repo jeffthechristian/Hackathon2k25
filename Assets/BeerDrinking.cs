@@ -58,8 +58,12 @@ public class BeerDrinking : MonoBehaviour
     private System.Collections.IEnumerator VomitRoutine()
     {
         isVomiting = true;
+
         audioSource.Stop();
-        audioSource.PlayOneShot(vomitingSound);
+
+        audioSource.clip = vomitingSound;
+        audioSource.loop = true;
+        audioSource.Play();
 
         float elapsed = 0f;
         while (elapsed < vomitDuration)
@@ -69,7 +73,8 @@ public class BeerDrinking : MonoBehaviour
             yield return new WaitForSeconds(vomitSpawnInterval);
         }
 
-        Destroy(gameObject); // Beer is consumed
+        audioSource.Stop();
+        Destroy(gameObject);
     }
 
     private void SpawnVomitProjectile()
