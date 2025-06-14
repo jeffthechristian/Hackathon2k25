@@ -23,12 +23,14 @@ public class Enemy : MonoBehaviour
     private float tauntTimer;
     private bool isAttacking;
     private float originalSpeed;
+    private EnemySpawner spawner; // Reference to spawner
 
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
+        spawner = FindObjectOfType<EnemySpawner>(); // Find spawner
         originalSpeed = moveSpeed;
         if (audioSource == null)
         {
@@ -131,7 +133,8 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Die");
         if (agent) agent.SetDestination(transform.position); // Stop movement
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        moneyManager.AddMoney(10);
+        if (moneyManager != null) moneyManager.AddMoney(10);
+        if (spawner != null) spawner.EnemyDied(); // Notify spawner
         Destroy(gameObject);
     }
 
