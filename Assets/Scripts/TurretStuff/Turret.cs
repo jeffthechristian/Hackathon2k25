@@ -15,6 +15,7 @@ public class Turret : MonoBehaviour
     private bool isActive = false;
     private float fireCooldown;
     private bool isShooting = false;
+    private Transform currentTarget; // Store target for Animation Event
 
     public void Start()
     {
@@ -53,31 +54,40 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null)
         {
             Vector3 dir = (nearestEnemy.position - transform.position).normalized;
-            dir.y = 0; // Ignore Y difference to lock rotation to Y axis
+            dir.y = 0;
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
 
-            if (fireCooldown <= 0f)
+            // Check if turret is aligned with enemy
+            float angleToEnemy = Vector3.Angle(transform.forward, dir);
+            if (fireCooldown <= 0f && angleToEnemy < 5f)
             {
-                StartCoroutine(DelayedShoot(nearestEnemy));
+                StartCoroutine(PlayShootAnimation(nearestEnemy));
                 fireCooldown = fireRate;
             }
         }
         else
         {
-            animator.Play("idle"); // Play idle if no enemies
+            animator.Play("idle");
         }
     }
 
-
-    IEnumerator DelayedShoot(Transform target)
+    IEnumerator PlayShootAnimation(Transform target)
     {
         isShooting = true;
-
-        float hammerDuration = 0.2f;
+        currentTarget = target; // Store target for Animation Event
         animator.Play("shoot");
 
-        yield return new WaitForSeconds(hammerDuration);
+        // Wait for animation to complete (or use state machine to detect end)
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        isShooting = false;
+    }
+
+    // Called by Animation Event
+    void OnShootEvent()
+    {
+        if (currentTarget == null) return;
 
         // Play shoot sound
         if (audioSource != null && shootSFX != null)
@@ -91,12 +101,8 @@ public class Turret : MonoBehaviour
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 direction = (target.position - firePoint.position).normalized;
+            Vector3 direction = (currentTarget.position - firePoint.position).normalized;
             rb.linearVelocity = direction * shootPower;
         }
-
-        isShooting = false;
     }
-
-
 }

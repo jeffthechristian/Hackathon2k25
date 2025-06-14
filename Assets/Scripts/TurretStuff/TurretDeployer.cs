@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Oculus.Interaction;
+using Oculus.Interaction.DistanceReticles;
 
 public class TurretDeployer : MonoBehaviour
 {
@@ -23,9 +24,7 @@ public class TurretDeployer : MonoBehaviour
             Debug.Log("Turret deployed!");
 
             // Disable grabbing after deployment
-            var grab = GetComponent<Grabbable>();
-            if (grab != null) grab.enabled = false;
-
+            gameObject.GetComponentInChildren<ReticleDataMesh>().gameObject.SetActive(false);
             // Freeze physics
             var rb = GetComponent<Rigidbody>();
             if (rb != null) rb.isKinematic = true;
