@@ -11,18 +11,17 @@ public class FartSound
 
 public class StickyGrenade : MonoBehaviour
 {
-    public float fuseTime = 2f;
+    public float fuseTime = 1f;
     public float explosionRadius = 5f;
     public AnimationCurve damageFalloff = AnimationCurve.Linear(0, 1, 1, 0);
     public List<FartSound> fartSounds = new List<FartSound>();
-
     public AudioClip splatterSound;
-    private AudioSource audioSource;
+    public GameObject explosionParticlePrefab; // Reference to particle effect prefab
 
+    private AudioSource audioSource;
     private Rigidbody rb;
     private bool isStuck = false;
     private Transform stuckTo;
-
     private FartSound selectedFart;
 
     void Start()
@@ -50,9 +49,7 @@ public class StickyGrenade : MonoBehaviour
         {
             audioSource.pitch = Random.Range(0.85f, 1.15f);
             audioSource.PlayOneShot(splatterSound);
-
         }
-
 
         // Start fuse
         StartCoroutine(FuseTimer());
@@ -75,6 +72,14 @@ public class StickyGrenade : MonoBehaviour
         }
         Debug.Log("Grenade exploded with base damage: " + selectedFart.baseDamage);
 
+        // Spawn particle effect
+        if (explosionParticlePrefab != null)
+        {
+            GameObject particleInstance = Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
+            // Destroy particle after 3 seconds
+            Destroy(particleInstance, 3f);
+        }
+
         Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (var hit in hits)
         {
@@ -92,24 +97,25 @@ public class StickyGrenade : MonoBehaviour
                     Debug.Log($"Damaged {hit.name} for {finalDamage:F1}");
                 }
             }
-            //Hide grenade, destroy after sound ends. ver smart yes?
-            HideGrenade(gameObject);
-            Destroy(gameObject, selectedFart.clip.length);
         }
 
-        void HideGrenade(GameObject obj)
-        {
-            foreach (var renderer in obj.GetComponents<Renderer>())
-            {
-                renderer.enabled = false;
-            }
-            foreach (Transform child in obj.transform) HideGrenade(child.gameObject);
-        }
+        // Hide grenade, destroy after sound ends
+        HideGrenade(gameObject);
+        Destroy(gameObject, selectedFart.clip.length);
+    }
 
-        void OnDrawGizmosSelected()
+    void HideGrenade(GameObject obj)
+    {
+        foreach (var renderer in obj.GetComponents<Renderer>())
         {
-            Gizmos.color = new Color(1, 0.5f, 0f, 0.3f);
-            Gizmos.DrawSphere(transform.position, explosionRadius);
+            renderer.enabled = false;
         }
+        foreach (Transform child in obj.transform) HideGrenade(child.gameObject);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 0.5f, 0f, 0.3f);
+        Gizmos.DrawSphere(transform.position, explosionRadius);
     }
 }
