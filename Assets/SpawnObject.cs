@@ -31,14 +31,12 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        if (moneyManager.CurrentMoney < match.cost)
+        if (!moneyManager.SpendMoney(match.cost))
         {
-            Debug.Log("Not enough money to spawn this object.");
             return;
         }
 
-        // Deduct money and spawn
-        moneyManager.SpendMoney(match.cost);
         Instantiate(match.prefab, spawnLocation.position, spawnLocation.rotation);
+        moneyManager.ObjectBought();
     }
 }
