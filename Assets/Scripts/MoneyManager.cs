@@ -1,15 +1,13 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class MoneyManager : MonoBehaviour
 {
-    [SerializeField]
-    private int startingMoney = 100;
-
+    [SerializeField] private int startingMoney = 100;
     public int CurrentMoney { get; private set; }
 
-    [SerializeField]
-    private TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI moneyText;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -17,9 +15,20 @@ public class MoneyManager : MonoBehaviour
     [SerializeField] private AudioClip notEnough;
     [SerializeField] private AudioClip itemBought;
 
+    private Color originalColor;
+    private Vector3 originalPosition;
+    private Coroutine colorCoroutine;
+
     private void Start()
     {
         CurrentMoney = startingMoney;
+
+        if (moneyText != null)
+        {
+            originalColor = moneyText.color;
+            originalPosition = moneyText.rectTransform.localPosition;
+        }
+
         UpdateMoneyUI();
     }
 
@@ -29,11 +38,15 @@ public class MoneyManager : MonoBehaviour
         {
             Debug.LogWarning("Attempted to spend more than available.");
             PlaySound(notEnough);
+            ShakeMoneyText();
+            FadeMoneyTextColor(Color.red);
             return false;
         }
 
         CurrentMoney -= amount;
         UpdateMoneyUI();
+        PlaySound(itemBought);
+        FadeMoneyTextColor(Color.red);
         return true;
     }
 
@@ -42,23 +55,15 @@ public class MoneyManager : MonoBehaviour
         CurrentMoney += amount;
         UpdateMoneyUI();
         PlaySound(gainMoney);
+        FadeMoneyTextColor(Color.green);
     }
 
     private void UpdateMoneyUI()
     {
         if (moneyText)
         {
-            moneyText.text = $"Money: ${CurrentMoney}";
+            moneyText.text = $"{CurrentMoney}";
         }
-        else
-        {
-            Debug.LogWarning("Money Text UI not assigned.");
-        }
-    }
-
-    public void ObjectBought()
-    {
-        PlaySound(itemBought);
     }
 
     private void PlaySound(AudioClip clip)
@@ -67,5 +72,61 @@ public class MoneyManager : MonoBehaviour
         {
             audioSource.PlayOneShot(clip);
         }
+    }
+
+    private void FadeMoneyTextColor(Color targetColor)
+    {
+        if (colorCoroutine != null)
+        {
+            StopCoroutine(colorCoroutine);
+        }
+        colorCoroutine = StartCoroutine(FadeColorCoroutine(targetColor, 0.5f));
+    }
+
+    private IEnumerator FadeColorCoroutine(Color targetColor, float duration)
+    {
+        if (moneyText == null) yield break;
+
+        moneyText.color = targetColor;
+
+        float t = 0;
+        while (t < duration)
+        {
+            moneyText.color = Color.Lerp(targetColor, originalColor, t / duration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        moneyText.color = originalColor;
+    }
+
+    private void ShakeMoneyText()
+    {
+        if (moneyText == null) return;
+        StartCoroutine(ShakeCoroutine(0.3f, 5f));
+    }
+
+    private IEnumerator ShakeCoroutine(float duration, float magnitude)
+    {
+        float elapsed = 0f;
+        var rt = moneyText.rectTransform;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            rt.localPosition = originalPosition + new Vector3(x, y, 0);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        rt.localPosition = originalPosition;
+        moneyText.color = originalColor;
+    }
+
+    public void ObjectBought()
+    {
+        PlaySound(itemBought);
     }
 }
