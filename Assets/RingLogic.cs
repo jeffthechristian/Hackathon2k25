@@ -24,6 +24,6 @@ public class RingLogic : MonoBehaviour
 
     private void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Restart");
     }
 }
