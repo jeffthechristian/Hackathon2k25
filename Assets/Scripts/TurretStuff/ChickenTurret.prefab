@@ -402,7 +402,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 4583450702385772234}
+  _pointableElement: {fileID: 9142380745861617238}
   _rigidbody: {fileID: 1299898012952578341}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -441,7 +441,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 4583450702385772234}
+  _pointableElement: {fileID: 9142380745861617238}
   _rigidbody: {fileID: 1299898012952578341}
   _grabSource: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 1299898012952578341}
   - component: {fileID: 4731176881135542847}
   - component: {fileID: 6525818562426364859}
-  - component: {fileID: 4583450702385772234}
+  - component: {fileID: 9142380745861617238}
   - component: {fileID: 2556315622475805116}
   m_Layer: 0
   m_Name: ChickenTurret
@@ -689,7 +689,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.869567, y: 11.778126, z: 7.609482}
   m_Center: {x: -0.045102704, y: 5.9291234, z: -0.030979376}
---- !u!114 &4583450702385772234
+--- !u!114 &9142380745861617238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -698,12 +698,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7113692720510884148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Script: {fileID: 11500000, guid: ba5153f6f8c705644869e7a8589e1f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
+  _throwVelocityMultiplier: 1
+  _throwAngularVelocityMultiplier: 1
   _oneGrabTransformer: {fileID: 0}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 0}

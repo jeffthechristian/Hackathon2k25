@@ -505,7 +505,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 265872908318142949}
+  _pointableElement: {fileID: 3714669301425063654}
   _rigidbody: {fileID: 5071604929497127858}
   _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -544,7 +544,7 @@ MonoBehaviour:
   _maxInteractors: -1
   _maxSelectingInteractors: -1
   _data: {fileID: 0}
-  _pointableElement: {fileID: 265872908318142949}
+  _pointableElement: {fileID: 3714669301425063654}
   _rigidbody: {fileID: 5071604929497127858}
   _grabSource: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
@@ -848,7 +848,7 @@ GameObject:
   - component: {fileID: 2561822251860116851}
   - component: {fileID: 8542304227416491183}
   - component: {fileID: 5071604929497127858}
-  - component: {fileID: 265872908318142949}
+  - component: {fileID: 3714669301425063654}
   - component: {fileID: 8461509160736182488}
   m_Layer: 0
   m_Name: StickyGrenade
@@ -1052,7 +1052,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &265872908318142949
+--- !u!114 &3714669301425063654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1061,12 +1061,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7730144545908941707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Script: {fileID: 11500000, guid: ba5153f6f8c705644869e7a8589e1f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transferOnSecondSelection: 0
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
+  _throwVelocityMultiplier: 1.5
+  _throwAngularVelocityMultiplier: 1.5
   _oneGrabTransformer: {fileID: 0}
   _twoGrabTransformer: {fileID: 0}
   _targetTransform: {fileID: 4642101080649928583}
