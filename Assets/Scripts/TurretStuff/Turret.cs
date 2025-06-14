@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
@@ -7,9 +8,19 @@ public class Turret : MonoBehaviour
     public float fireRate = 1f;
     public GameObject bulletPrefab;
     public Transform firePoint;
+    private Animator animator;
+    public AudioClip shootSFX;
 
+    private AudioSource audioSource;
     private bool isActive = false;
     private float fireCooldown;
+    private bool isShooting = false;
+
+    public void Start()
+    {
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void Activate()
     {
@@ -18,7 +29,7 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        if (!isActive) return;
+        if (!isActive || isShooting) return;
 
         fireCooldown -= Time.deltaTime;
 
@@ -41,21 +52,40 @@ public class Turret : MonoBehaviour
 
         if (nearestEnemy != null)
         {
-            // Rotate towards ze enemiez
             Vector3 dir = (nearestEnemy.position - transform.position).normalized;
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
+
             if (fireCooldown <= 0f)
             {
-                Shoot(nearestEnemy);
+                StartCoroutine(DelayedShoot(nearestEnemy));
                 fireCooldown = fireRate;
             }
         }
+        else
+        {
+            animator.Play("idle"); // Play idle if no enemies
+        }
     }
 
-    void Shoot(Transform target)
+
+    IEnumerator DelayedShoot(Transform target)
     {
-        //Ze bullet appear and fly in ze diretction
+        isShooting = true;
+
+        float hammerDuration = 0.2f;
+        animator.Play("shoot");
+
+        yield return new WaitForSeconds(hammerDuration);
+
+        // Play shoot sound
+        if (audioSource != null && shootSFX != null)
+        {
+            audioSource.pitch = Random.Range(0.5f, 1.5f);
+            audioSource.PlayOneShot(shootSFX);
+        }
+
+        // Fire bullet
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
@@ -63,5 +93,9 @@ public class Turret : MonoBehaviour
             Vector3 direction = (target.position - firePoint.position).normalized;
             rb.linearVelocity = direction * shootPower;
         }
+
+        isShooting = false;
     }
+
+
 }
