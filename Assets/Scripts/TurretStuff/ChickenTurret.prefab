@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 3f1827c2-c682-46d8-999e-0954e37e833e
-  instanceId: 473af272-6f76-4709-bc50-8f8b6efbdfd6
+  instanceId: b87a1d47-c6e2-4281-a1d7-09f48c00308a
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 20b9ad69-c205-488d-a6b2-d3d7ca6c1e53
@@ -618,6 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deployedScale: {x: 0.08, y: 0.08, z: 0.08}
   deploySFX: {fileID: 8300000, guid: 2e0bd187e28c4ce469962079aa7d08c4, type: 3}
+  grabber: {fileID: 5531464729074711646}
 --- !u!54 &1299898012952578341
 Rigidbody:
   m_ObjectHideFlags: 0

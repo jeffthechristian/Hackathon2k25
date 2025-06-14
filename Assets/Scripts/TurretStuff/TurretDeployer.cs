@@ -8,7 +8,7 @@ public class TurretDeployer : MonoBehaviour
     public Vector3 deployedScale = Vector3.one; // Set this in the Inspector
     private bool deployed = false;
     public AudioClip deploySFX;
-
+    public GameObject grabber;
     private AudioSource audioSource;
 
     void Start()
@@ -24,7 +24,7 @@ public class TurretDeployer : MonoBehaviour
             Debug.Log("Turret deployed!");
 
             // Disable grabbing after deployment
-            gameObject.GetComponentInChildren<ReticleDataMesh>().gameObject.SetActive(false);
+            grabber.SetActive(false);
             // Freeze physics
             var rb = GetComponent<Rigidbody>();
             if (rb != null) rb.isKinematic = true;
