@@ -83,8 +83,6 @@ public class BeerDrinking : MonoBehaviour
             Vector3 randomDir = (headTransform.forward + Random.insideUnitSphere * 0.3f).normalized;
             rb.AddForce(randomDir * vomitProjectileForce, ForceMode.Impulse);
         }
-
-        Destroy(vomit, 2f); // Auto destroy after 2 seconds
     }
 
     private void OnTriggerEnter(Collider other)
