@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public GameObject meleeHitbox;
     public List<AudioClip> tauntAudioClips;
     public float tauntVolume = 1f;
+    // NEW: Damage dealt to wall
+    public float wallDamage = 10f;
 
     private Animator animator;
     private NavMeshAgent agent;
@@ -30,6 +32,8 @@ public class Enemy : MonoBehaviour
     private float attractionTimer;
     private bool isDead;
     private bool isDrinking;
+    // NEW: Track wall target
+    private WallSection wallTarget;
 
     void Start()
     {
@@ -56,7 +60,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (isAttacking || isDead || isDrinking) return; // Skip if attacking, dead, or drinking
+        if (isAttacking || isDead || isDrinking) return;
 
         attackTimer -= Time.deltaTime;
         tauntTimer -= Time.deltaTime;
@@ -69,23 +73,38 @@ public class Enemy : MonoBehaviour
                 isAttracted = false;
             }
 
-            // Check if enemy has reached the attraction point
             float distanceToAttraction = Vector3.Distance(transform.position, attractionPoint);
-            if (distanceToAttraction <= 0.5f) // Adjust threshold as needed
+            if (distanceToAttraction <= 0.5f)
             {
                 Debug.Log($"{gameObject.name} reached attraction point, triggering Drink animation");
                 StartCoroutine(PlayDrinkAnimation());
-                return; // Exit Update to prevent further movement or attacks
+                return;
             }
         }
 
         Vector3 currentTargetPos = isAttracted ? attractionPoint : target.position;
-        float distanceToTarget = Vector3.Distance(transform.position, currentTargetPos);
+        // NEW: Check if path to target exists
+        bool hasPath = HasPathTo(currentTargetPos);
+
+        if (!hasPath && wallTarget == null)
+        {
+            // Find nearest wall section
+            wallTarget = FindNearestWallSection();
+            if (wallTarget != null)
+            {
+                Debug.Log($"{gameObject.name} cannot reach target, targeting wall section {wallTarget.name}");
+            }
+        }
+
+        // NEW: Decide target based on path availability
+        Transform attackTarget = wallTarget != null ? wallTarget.transform : null;
+        Vector3 finalTargetPos = wallTarget != null ? wallTarget.transform.position : currentTargetPos;
+        float distanceToTarget = Vector3.Distance(transform.position, finalTargetPos);
         bool inMeleeRange = distanceToTarget <= meleeRange;
 
         animator.SetBool("IsInMeleeRange", inMeleeRange);
 
-        if (inMeleeRange && !isAttracted) // Only allow melee attacks when not attracted
+        if (inMeleeRange)
         {
             if (agent) agent.SetDestination(transform.position);
             animator.SetBool("IsRunning", false);
@@ -93,7 +112,7 @@ public class Enemy : MonoBehaviour
             if (attackTimer <= 0f)
             {
                 Debug.Log($"{gameObject.name} initiating MeleeAttack");
-                StartCoroutine(PlayMeleeAttack());
+                StartCoroutine(PlayMeleeAttack(attackTarget));
                 attackTimer = attackCooldown;
                 if (Random.value < tauntChance && tauntTimer <= 0f)
                 {
@@ -105,14 +124,14 @@ public class Enemy : MonoBehaviour
         else
         {
             animator.SetBool("IsRunning", true);
-            Vector3 dir = (currentTargetPos - transform.position).normalized;
+            Vector3 dir = (finalTargetPos - transform.position).normalized;
             dir.y = 0;
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
 
             if (agent)
             {
-                agent.SetDestination(currentTargetPos);
+                agent.SetDestination(finalTargetPos);
                 agent.speed = moveSpeed;
             }
             else
@@ -120,6 +139,36 @@ public class Enemy : MonoBehaviour
                 transform.position += dir * moveSpeed * Time.deltaTime;
             }
         }
+    }
+
+    // NEW: Check if path exists to target
+    private bool HasPathTo(Vector3 targetPos)
+    {
+        if (agent == null) return false;
+
+        NavMeshPath path = new NavMeshPath();
+        bool pathFound = agent.CalculatePath(targetPos, path);
+        return pathFound && path.status == NavMeshPathStatus.PathComplete;
+    }
+
+    // NEW: Find nearest wall section
+    private WallSection FindNearestWallSection()
+    {
+        WallSection[] wallSections = FindObjectsOfType<WallSection>();
+        WallSection nearest = null;
+        float minDistance = float.MaxValue;
+
+        foreach (WallSection section in wallSections)
+        {
+            float distance = Vector3.Distance(transform.position, section.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = section;
+            }
+        }
+
+        return nearest;
     }
 
     public void TakeDamage(float amount)
@@ -168,7 +217,8 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator PlayMeleeAttack()
+    // MODIFIED: Added parameter to handle wall damage
+    IEnumerator PlayMeleeAttack(Transform attackTarget)
     {
         if (isDead) yield break;
         isAttacking = true;
@@ -176,6 +226,15 @@ public class Enemy : MonoBehaviour
         if (meleeHitbox) meleeHitbox.SetActive(true);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         if (meleeHitbox) meleeHitbox.SetActive(false);
+
+        // NEW: Apply damage to wall if targeting a wall section
+        if (attackTarget != null && attackTarget.GetComponent<WallSection>() != null)
+        {
+            WallSection section = attackTarget.GetComponent<WallSection>();
+            section.TakeDamage(wallDamage);
+            Debug.Log($"{gameObject.name} dealt {wallDamage} damage to wall section {section.name}");
+        }
+
         isAttacking = false;
     }
 
@@ -197,14 +256,14 @@ public class Enemy : MonoBehaviour
     {
         if (isDead) yield break;
         isDrinking = true;
-        if (agent) agent.SetDestination(transform.position); // Stop movement
+        if (agent) agent.SetDestination(transform.position);
         animator.SetBool("IsRunning", false);
         animator.SetTrigger("Drink");
         Debug.Log($"{gameObject.name} set Drink trigger");
 
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         isDrinking = false;
-        isAttracted = false; // Stop attraction after drinking
+        isAttracted = false;
         Debug.Log($"{gameObject.name} finished Drink animation");
     }
 
@@ -231,6 +290,8 @@ public class Enemy : MonoBehaviour
         isAttracted = true;
         attractionPoint = position;
         attractionTimer = duration;
+        // NEW: Reset wall target when attracted
+        wallTarget = null;
         Debug.Log($"{gameObject.name} is attracted to {position} for {duration} seconds");
     }
 
