@@ -239,9 +239,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attractRadius: 10
   attractDuration: 5
+  throwThreshold: 1.5
+  distractionSound: {fileID: 0}
   flyingSound: {fileID: 8300000, guid: 80a6944e237bc0040aee6e18062d3d6c, type: 3}
   landingSound: {fileID: 8300000, guid: 2d72b106ebf8d8e4aad6ac6bd2a8d981, type: 3}
   visualEffectPrefab: {fileID: 0}
+  distractionSoundCommon: {fileID: 8300000, guid: ae6cac2f8c5bb984a8e9219fb87bb70d, type: 3}
+  distractionSoundRare: {fileID: 8300000, guid: 49bcbe4f0b02c2e4c9a4c4877de9c44e, type: 3}
 --- !u!33 &4814786798787381018
 MeshFilter:
   m_ObjectHideFlags: 0

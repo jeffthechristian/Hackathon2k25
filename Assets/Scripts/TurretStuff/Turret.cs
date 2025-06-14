@@ -89,12 +89,12 @@ public class Turret : MonoBehaviour
     {
         if (currentTarget == null) return;
 
-        // Play shoot sound
-        if (audioSource != null && shootSFX != null)
+        if (audioSource != null && shootSFX != null && Random.value < 0.2f)
         {
             audioSource.pitch = Random.Range(0.5f, 1.5f);
             audioSource.PlayOneShot(shootSFX);
         }
+
 
         // Fire bullet
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);

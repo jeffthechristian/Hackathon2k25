@@ -11,6 +11,8 @@ public class SixPack : MonoBehaviour
     public AudioClip flyingSound;
     public AudioClip landingSound;
     public GameObject visualEffectPrefab;
+    public AudioClip distractionSoundCommon; // 90% chance
+    public AudioClip distractionSoundRare; // 10% chance
 
     private AudioSource audioSource;
     private Rigidbody rb;
@@ -88,11 +90,13 @@ public class SixPack : MonoBehaviour
         rb.isKinematic = true;
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-        // Play distraction sound
-        if (distractionSound)
+        // Play randomized distraction sound
+        AudioClip chosenClip = (Random.value < 0.9f) ? distractionSoundCommon : distractionSoundRare;
+        if (chosenClip)
         {
-            audioSource.PlayOneShot(distractionSound);
+            audioSource.PlayOneShot(chosenClip);
         }
+
 
         // Visual effect
         if (visualEffectPrefab)
