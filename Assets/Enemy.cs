@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
             {
                 // Stop moving
                 if (agent) agent.SetDestination(transform.position);
-                else transform.position = transform.position; // No movement
+                else transform.position = transform.position;
 
                 // Melee combo
                 if (meleeComboTimer <= 0f)
@@ -145,7 +145,6 @@ public class Enemy : MonoBehaviour
         isAttacking = false;
     }
 
-    // Called by Animation Events for melee combo
     void OnAttackHitboxEvent(bool enable)
     {
         if (meleeHitbox) meleeHitbox.SetActive(enable);
