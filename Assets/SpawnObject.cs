@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
         public GameObject prefab;
         public int cost;
         public Transform[] spawnPositions = new Transform[4]; // 4 predefined spawn positions
+        public Quaternion spawnRotation = Quaternion.identity; // Single rotation for all spawn positions
         [HideInInspector] public int spawnCount = 0; // Track how many times it has been spawned
         [HideInInspector] public List<GameObject> spawnedObjects = new List<GameObject>(); // Track spawned objects
     }
@@ -20,6 +21,7 @@ public class SpawnManager : MonoBehaviour
 
     public int repairCost = 50; // Cost to repair
     public int upgradeCost = 100; // Cost to upgrade from Wall1 to Wall2
+
     public void SpawnByID(int id)
     {
         var match = spawnables.Find(p => p.id == id);
@@ -48,7 +50,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         Transform spawnPos = match.spawnPositions[match.spawnCount]; // Use next available position
-        GameObject spawnedObject = Instantiate(match.prefab, spawnPos.position, spawnPos.rotation);
+        GameObject spawnedObject = Instantiate(match.prefab, spawnPos.position, match.spawnRotation); // Use single rotation
         match.spawnCount++;
         match.spawnedObjects.Add(spawnedObject); // Track the spawned object
         moneyManager.ObjectBought();
@@ -68,6 +70,7 @@ public class SpawnManager : MonoBehaviour
             Debug.Log($"Spawn count for item ID {prefab.id} decreased to {prefab.spawnCount}.");
         }
     }
+
     public void RepairWall()
     {
         if (!moneyManager)

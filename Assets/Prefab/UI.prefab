@@ -3548,6 +3548,7 @@ MonoBehaviour:
     - {fileID: 150469475609293965}
     - {fileID: 4261668100856497947}
     - {fileID: 6141797024662199545}
+    spawnRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
     spawnCount: 0
     spawnedObjects: []
   - id: 1
@@ -3558,6 +3559,7 @@ MonoBehaviour:
     - {fileID: 982972966153337628}
     - {fileID: 1518358885845065811}
     - {fileID: 2009401145098330214}
+    spawnRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}
     spawnCount: 0
     spawnedObjects: []
   - id: 2
@@ -3568,6 +3570,7 @@ MonoBehaviour:
     - {fileID: 2437253472766795566}
     - {fileID: 4271336579356645539}
     - {fileID: 4668115032634051353}
+    spawnRotation: {x: 0, y: 0, z: 0, w: 1}
     spawnCount: 0
     spawnedObjects: []
   - id: 3
@@ -3578,6 +3581,7 @@ MonoBehaviour:
     - {fileID: 4329296710235830024}
     - {fileID: 8930918177958324775}
     - {fileID: 2236827452793882275}
+    spawnRotation: {x: 0, y: 0, z: 0, w: 1}
     spawnCount: 0
     spawnedObjects: []
   - id: 4
@@ -3588,6 +3592,7 @@ MonoBehaviour:
     - {fileID: 5296087767315838191}
     - {fileID: 1676736935739347214}
     - {fileID: 258012267588589719}
+    spawnRotation: {x: 0, y: 0, z: 0, w: 1}
     spawnCount: 0
     spawnedObjects: []
   - id: 5
@@ -3598,6 +3603,7 @@ MonoBehaviour:
     - {fileID: 4684855272985350675}
     - {fileID: 3645972923857741034}
     - {fileID: 2449102207751428442}
+    spawnRotation: {x: 0, y: 0, z: 0, w: 1}
     spawnCount: 0
     spawnedObjects: []
   moneyManager: {fileID: 6306325020306891331}
