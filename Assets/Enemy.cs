@@ -258,7 +258,7 @@ public class Enemy : MonoBehaviour
             collider.enabled = false;
         }
 
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(3f);
 
         if (moneyManager != null) moneyManager.AddMoney(10);
         if (spawner != null) spawner.EnemyDied();
