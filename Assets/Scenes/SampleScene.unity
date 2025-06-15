@@ -1047,6 +1047,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01
       objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.55
@@ -1703,7 +1707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 259229385}
   - component: {fileID: 259229386}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3750,6 +3754,10 @@ PrefabInstance:
     - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8183,6 +8191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.71
@@ -9212,6 +9224,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.45
@@ -9426,6 +9442,10 @@ PrefabInstance:
     - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21457,7 +21477,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 447
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -21544,9 +21564,49 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 380437730881661207, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 442907927464078778, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 606861388001465286, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042735880256908552, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3801044921662999844, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
       propertyPath: m_Name
       value: Wall2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801044921662999844, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853933984208540833, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523697767468400464, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953074053554712653, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697907224460266200, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6249844088022452311, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7906762403162864879, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21587,6 +21647,18 @@ PrefabInstance:
     - target: {fileID: 7906762403162864879, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278652648068827042, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8428587159396536500, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524843290765623184, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22240,6 +22312,10 @@ PrefabInstance:
     - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23487,6 +23563,10 @@ PrefabInstance:
     - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Stick_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 180602, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 414272, guid: 02f5d17e0c791d94aa778001d3bbb58f, type: 3}
       propertyPath: m_LocalPosition.x

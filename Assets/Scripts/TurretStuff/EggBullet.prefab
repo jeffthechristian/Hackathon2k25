@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2217911172837229607}
   - component: {fileID: 4369807003097970710}
   - component: {fileID: 1053028417923125836}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EggBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
