@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7540002649827502902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6015177452539106850}
+  - component: {fileID: 296076963035060867}
+  m_Layer: 0
+  m_Name: airstrike_PLACEHOLDER_RALF_PUT_BUTTON_HERE
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6015177452539106850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540002649827502902}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.57385105, y: 1.309684, z: 1.7197059}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &296076963035060867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7540002649827502902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9c4db6705065840b3c8e0e29a9bbd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pigeonPrefab: {fileID: 1987151468645422309, guid: 05ece8fa222848e43978079442949918, type: 3}
+  pigeonFlyingSound: {fileID: 8300000, guid: 0e0f4d8a58ded12409eae24e7be99f92, type: 3}
+  explosionSound: {fileID: 8300000, guid: 0fb1c19f00ee13845b4478611a8d67db, type: 3}
+  approachDistance: 100
+  approachHeight: 15
+  approachSpeed: 20
+  diveSpeed: 10
+  diveTriggerDistance: 30
+  explosionEffect: {fileID: 0}
+  explosionRadius: 30
+  damageLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  targetObject: {fileID: 0}
