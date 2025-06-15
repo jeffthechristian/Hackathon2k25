@@ -5632,7 +5632,7 @@ MonoBehaviour:
   - {fileID: 1252925214}
   - {fileID: 577599504}
   shopUIAnimator: {fileID: 9070258920096326729}
-  spawnManager: {fileID: 0}
+  spawnManager: {fileID: 9070258920096326732}
 --- !u!4 &711353346
 Transform:
   m_ObjectHideFlags: 0
