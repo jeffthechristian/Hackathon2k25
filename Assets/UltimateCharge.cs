@@ -7,8 +7,6 @@ public class UltimateCharge : MonoBehaviour
     public float chargeDuration = 120f; // 2 minutes
     public GameObject ultimateObject;   // Object to activate when charged
     public TextMeshProUGUI statusText;  // UI Text to show status
-    public AudioClip successSound;
-    public AudioClip failSound;
     public AudioClip chargedSound;      // New: Sound when fully charged
 
     private float currentChargeTime = 0f;
@@ -22,7 +20,7 @@ public class UltimateCharge : MonoBehaviour
             ultimateObject.SetActive(false);
 
         if (statusText != null)
-            statusText.text = "Not Charged";
+            statusText.text = "Pidgeons Asleep";
 
 
         audioSource = GetComponent<AudioSource>();
@@ -43,7 +41,7 @@ public class UltimateCharge : MonoBehaviour
             }
 
             if (statusText != null)
-                statusText.text = "Not Charged";
+                statusText.text = "Pidgeons Asleep";
         }
 
         if (isCharged && !hasPlayedChargedSound)
@@ -52,7 +50,7 @@ public class UltimateCharge : MonoBehaviour
                 ultimateObject.SetActive(true);
 
             if (statusText != null)
-                statusText.text = "Launch Attack";
+                statusText.text = "Launch Pidegons";
 
             PlaySound(chargedSound);
             hasPlayedChargedSound = true;
@@ -63,12 +61,8 @@ public class UltimateCharge : MonoBehaviour
     {
         if (!isCharged)
         {
-            PlaySound(failSound);
             return;
         }
-
-        // Successful activation
-        PlaySound(successSound);
 
         if (ultimateObject != null)
             ultimateObject.SetActive(false);
@@ -85,6 +79,7 @@ public class UltimateCharge : MonoBehaviour
     void PlaySound(AudioClip clip)
     {
         if (clip != null && audioSource != null)
-            audioSource.PlayOneShot(clip);
+            audioSource.clip = chargedSound;
+            audioSource.Play();
     }
 }
