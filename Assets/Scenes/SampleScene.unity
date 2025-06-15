@@ -1677,6 +1677,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2117633275}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &247530170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2809875599665709319, guid: 161d44ccf54ae414faf5e472890a2e6f, type: 3}
+  m_PrefabInstance: {fileID: 1320412409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &247530172
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247530170}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79567de1d0110c346abc802f67c86a2e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &247789359
 GameObject:
   m_ObjectHideFlags: 0
@@ -5605,7 +5632,7 @@ MonoBehaviour:
   - {fileID: 1252925214}
   - {fileID: 577599504}
   shopUIAnimator: {fileID: 9070258920096326729}
-  spawnManager: {fileID: 0}
+  spawnManager: {fileID: 9070258920096326732}
 --- !u!4 &711353346
 Transform:
   m_ObjectHideFlags: 0
@@ -10899,7 +10926,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2809875599665709319, guid: 161d44ccf54ae414faf5e472890a2e6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 247530172}
   m_SourcePrefab: {fileID: 100100000, guid: 161d44ccf54ae414faf5e472890a2e6f, type: 3}
 --- !u!1 &1341107384
 GameObject:
