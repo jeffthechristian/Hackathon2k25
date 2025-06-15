@@ -12,8 +12,8 @@ public class EnemySpawner : MonoBehaviour
     private int currentEnemyCount = 0; // Track active enemies
     private bool isWaveActive = false; // Is a wave currently running
     private int[] enemiesPerWave = { 3, 6, 12, 18, 24, 32, 40 }; // Enemies per wave
-    private float[] spawnRates = { 5f, 4f, 3f, 2.5f, 2f, 1.5f, 1f }; // Spawn rate per wave
-    private float[] enemyHealthMultipliers = { 1f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f }; // Health multiplier per wave
+    private float[] spawnRates = { 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // Spawn rate per wave
+    private float[] enemyHealthMultipliers = { 1f, 1f, 1f, 1f, 1f, 1f, 1f }; // Health multiplier per wave
     public Animator shopUIAnimator;
     public SpawnManager spawnManager;
     void Start()

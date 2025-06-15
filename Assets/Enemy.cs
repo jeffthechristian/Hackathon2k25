@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
-        spawner = FindObjectOfType<EnemySpawner>();
+        spawner = FindFirstObjectByType<EnemySpawner>();
         originalSpeed = moveSpeed;
         if (audioSource == null)
         {
@@ -181,14 +181,21 @@ public class Enemy : MonoBehaviour
 
         foreach (WallSection section in wallSections)
         {
-            float distance = Vector3.Distance(transform.position, section.transform.position);
-            if (distance < minDistance)
+            if (section.gameObject.activeSelf)
             {
-                minDistance = distance;
-                nearest = section;
+                float distance = Vector3.Distance(transform.position, section.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearest = section;
+                }
             }
         }
 
+        if (nearest == null)
+        {
+            Debug.LogWarning($"{gameObject.name} could not find a valid wall section");
+        }
         return nearest;
     }
 
