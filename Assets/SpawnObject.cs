@@ -82,6 +82,21 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
+        // Check if either wall1 or wall2 is already active
+        if (wallUpgrader.wall1 != null && wallUpgrader.wall2 != null)
+        {
+            if (wallUpgrader.wall1.activeSelf || wallUpgrader.wall2.activeSelf)
+            {
+                Debug.Log("Wall repair skipped: Wall1 or Wall2 is already active.");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("WallUpgrader: Wall1 or Wall2 is not assigned.");
+            return;
+        }
+
         if (!moneyManager.SpendMoney(repairCost))
         {
             Debug.Log("Not enough money to repair the wall.");
@@ -104,6 +119,13 @@ public class SpawnManager : MonoBehaviour
         if (!wallUpgrader)
         {
             Debug.LogWarning("WallUpgrader not assigned.");
+            return;
+        }
+
+        // Check if wall2 is already active
+        if (wallUpgrader.wall2 != null && wallUpgrader.wall2.activeSelf)
+        {
+            Debug.Log("Wall upgrade skipped: Wall2 is already active.");
             return;
         }
 
