@@ -21979,6 +21979,7 @@ GameObject:
   - component: {fileID: 4301961177163495313}
   - component: {fileID: 3495170010643684237}
   - component: {fileID: 5774426546606020072}
+  - component: {fileID: 5774426546606020073}
   m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
@@ -22011,6 +22012,23 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4ea760b454e5a8c4bb61d1c03a47fef0, type: 3}
   - {fileID: 8300000, guid: 5f657b046461f1a4b96ef9345b3af423, type: 3}
   - {fileID: 8300000, guid: 1dcd8939fbcb38348bdb181c81c03233, type: 3}
+  uiCanvas: {fileID: 0}
+--- !u!114 &5774426546606020073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5774426546606020071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c90eed13c708d2409524ed9c352c733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCanvas: {fileID: 188310789194768780}
+  cameraTransform: {fileID: 430327311}
+  distanceFromCamera: 1.5
+  smoothSpeed: 5
 --- !u!114 &6084972047759384304
 MonoBehaviour:
   m_ObjectHideFlags: 0
