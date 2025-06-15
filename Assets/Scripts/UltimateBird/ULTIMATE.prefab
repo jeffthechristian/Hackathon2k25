@@ -629,7 +629,8 @@ MonoBehaviour:
   ultimateObject: {fileID: 2809875599665709319}
   statusText: {fileID: 6780287133696205017}
   chargedSound: {fileID: 8300000, guid: 862ad8cb46ea34d4696dafd9a057df60, type: 3}
-  airstrike: {fileID: 0}
+  airstrike: {fileID: 2543524659181785209}
+  targetLoc: {fileID: 0}
 --- !u!114 &2543524659181785209
 MonoBehaviour:
   m_ObjectHideFlags: 0
