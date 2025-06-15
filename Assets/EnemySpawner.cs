@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private float[] spawnRates = { 5f, 4f, 3f, 2.5f, 2f, 1.5f, 1f }; // Spawn rate per wave
     private float[] enemyHealthMultipliers = { 1f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f }; // Health multiplier per wave
     public Animator shopUIAnimator;
+    public SpawnManager spawnManager;
     void Start()
     {
         // Find the target object with the "Ring" tag
@@ -74,6 +75,7 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log($"Starting Wave {currentWave}");
         if (shopUIAnimator != null)
             shopUIAnimator.SetTrigger("goUp");
+        spawnManager.PlayUIAUIA();
         // Calculate enemies for this wave
         int maxEnemiesThisWave = currentWave <= enemiesPerWave.Length
             ? enemiesPerWave[currentWave - 1]
@@ -110,6 +112,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (shopUIAnimator != null)
             shopUIAnimator.SetTrigger("goDown");
+        spawnManager.PlayUIAUIA();
     }
 
     void SpawnEnemy(float healthMultiplier)

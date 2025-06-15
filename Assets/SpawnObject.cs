@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.Audio;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -22,6 +24,13 @@ public class SpawnManager : MonoBehaviour
     public int repairCost = 50; // Cost to repair
     public int upgradeCost = 100; // Cost to upgrade from Wall1 to Wall2
 
+    public AudioClip uiaiuiai;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void SpawnByID(int id)
     {
         var match = spawnables.Find(p => p.id == id);
@@ -145,5 +154,28 @@ public class SpawnManager : MonoBehaviour
         }
         moneyManager.ObjectBought();
         Debug.Log($"Wall upgraded for {upgradeCost} coins.");
+    }
+    public void PlayUIAUIA()
+    {
+        if (uiaiuiai == null)
+        {
+            Debug.LogWarning("Action sound clip not assigned!");
+            return;
+        }
+
+        if (audioSource == null)
+        {
+            Debug.LogWarning("AudioSource not found!");
+            return;
+        }
+
+        StartCoroutine(PlayUIAUIACor(uiaiuiai, 2f));
+    }
+    private IEnumerator PlayUIAUIACor(AudioClip clip, float duration)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+        yield return new WaitForSecondsRealtime(duration);
+        audioSource.Stop();
     }
 }
