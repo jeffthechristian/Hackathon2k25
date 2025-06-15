@@ -36,14 +36,6 @@ public class WallManager : MonoBehaviour
 
     void DestroyWall()
     {
-        foreach (GameObject section in wallSections)
-        {
-            if (section != null)
-            {
-                Destroy(section);
-            }
-        }
-        Debug.Log("Wall destroyed!");
-        Destroy(gameObject); // Destroy the WallManager itself
+        gameObject.SetActive(false);
     }
 }
