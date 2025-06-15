@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; // The Enemy prefab to spawn
+    public List<GameObject> enemyPrefabs;
     public MoneyManager moneyManager; // Reference to MoneyManager
     public Transform[] spawnPointTransforms; // Assign spawn point GameObjects in the Inspector
     private Vector3[] spawnPoints; // Internal array for spawn positions
@@ -121,7 +123,8 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // Instantiate enemy
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        int randomIndex = Random.Range(0, enemyPrefabs.Count);
+        GameObject enemy = Instantiate(enemyPrefabs[randomIndex], spawnPosition, Quaternion.identity);
 
         // Set MoneyManager and health multiplier on the enemy
         Enemy enemyScript = enemy.GetComponent<Enemy>();
