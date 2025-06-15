@@ -169,7 +169,7 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(PlayUIAUIACor(uiaiuiai, 5f));
+        StartCoroutine(PlayUIAUIACor(uiaiuiai, 2f));
     }
     private IEnumerator PlayUIAUIACor(AudioClip clip, float duration)
     {

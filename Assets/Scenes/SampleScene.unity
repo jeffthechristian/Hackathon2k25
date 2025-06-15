@@ -25585,7 +25585,7 @@ PrefabInstance:
     - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: uiaiuiai
       value: 
-      objectReference: {fileID: 8300000, guid: 419bf8f971f5c564a98a630c97de72a6, type: 3}
+      objectReference: {fileID: 8300000, guid: 58bdf7364a1c5134fb7580db637471df, type: 3}
     - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: wallUpgrader
       value: 
