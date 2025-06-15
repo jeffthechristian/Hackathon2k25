@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        Transform attackTarget = wallTarget != null ? wallTarget.transform : null;
+        Transform attackTarget = wallTarget != null ? wallTarget.transform : target; // Use ring's transform if no wall
         Vector3 finalTargetPos = wallTarget != null ? wallTarget.transform.position : currentTargetPos;
         float distanceToTarget = Vector3.Distance(transform.position, finalTargetPos);
         bool inMeleeRange = distanceToTarget <= meleeRange;
