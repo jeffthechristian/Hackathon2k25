@@ -8,6 +8,7 @@ public class MainMenuControls : MonoBehaviour
 {
     public List<AudioClip> helpTroll;
     private AudioSource audioSource;
+    public Canvas uiCanvas;
 
     private void Start()
     {
@@ -23,6 +24,10 @@ public class MainMenuControls : MonoBehaviour
     {
         Application.Quit();
     }
+    public void QuitMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     public void PlaySound()
     {
         if (helpTroll == null || helpTroll.Count == 0)
@@ -35,5 +40,9 @@ public class MainMenuControls : MonoBehaviour
         {
             audioSource.PlayOneShot(clip);
         }
+    }
+    public void OnResume()
+    {
+        uiCanvas.gameObject.SetActive(false);
     }
 }
