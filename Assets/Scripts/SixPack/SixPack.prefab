@@ -237,8 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c602f3617773049ac8f4a2c30a74cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractRadius: 10
-  attractDuration: 5
+  attractRadius: 25
+  attractDuration: 10
   throwThreshold: 1.5
   distractionSound: {fileID: 0}
   flyingSound: {fileID: 8300000, guid: 80a6944e237bc0040aee6e18062d3d6c, type: 3}

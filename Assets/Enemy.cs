@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
             }
 
             float distanceToAttraction = Vector3.Distance(transform.position, attractionPoint);
-            if (distanceToAttraction <= 0.5f)
+            if (distanceToAttraction <= 1f)
             {
                 Debug.Log($"{gameObject.name} reached attraction point, triggering Drink animation");
                 StartCoroutine(PlayDrinkAnimation());
@@ -99,41 +99,61 @@ public class Enemy : MonoBehaviour
         float distanceToTarget = Vector3.Distance(transform.position, finalTargetPos);
         bool inMeleeRange = distanceToTarget <= meleeRange;
 
-        animator.SetBool("IsInMeleeRange", inMeleeRange);
-
-        if (inMeleeRange)
+        // Skip melee attack logic if attracted to an item
+        if (!isAttracted)
         {
-            if (agent) agent.SetDestination(transform.position);
-            animator.SetBool("IsRunning", false);
+            animator.SetBool("IsInMeleeRange", inMeleeRange);
 
-            if (attackTimer <= 0f)
+            if (inMeleeRange)
             {
-                Debug.Log($"{gameObject.name} initiating MeleeAttack");
-                StartCoroutine(PlayMeleeAttack(attackTarget));
-                attackTimer = attackCooldown;
-                if (Random.value < tauntChance && tauntTimer <= 0f)
+                if (agent) agent.SetDestination(transform.position);
+                animator.SetBool("IsRunning", false);
+
+                if (attackTimer <= 0f)
                 {
-                    StartCoroutine(PlayTaunt());
-                    tauntTimer = tauntCooldown;
+                    Debug.Log($"{gameObject.name} initiating MeleeAttack");
+                    StartCoroutine(PlayMeleeAttack(attackTarget));
+                    attackTimer = attackCooldown;
+                    if (Random.value < tauntChance && tauntTimer <= 0f)
+                    {
+                        StartCoroutine(PlayTaunt());
+                        tauntTimer = tauntCooldown;
+                    }
+                }
+            }
+            else
+            {
+                animator.SetBool("IsRunning", true);
+                Vector3 dir = (finalTargetPos - transform.position).normalized;
+                dir.y = 0;
+                Quaternion lookRot = Quaternion.LookRotation(dir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
+
+                if (agent)
+                {
+                    agent.SetDestination(finalTargetPos);
+                    agent.speed = moveSpeed;
+                }
+                else
+                {
+                    transform.position += dir * moveSpeed * Time.deltaTime;
                 }
             }
         }
         else
         {
+            // When attracted, just move towards the attraction point
             animator.SetBool("IsRunning", true);
-            Vector3 dir = (finalTargetPos - transform.position).normalized;
+            animator.SetBool("IsInMeleeRange", false); // Prevent melee animation triggers
+            Vector3 dir = (attractionPoint - transform.position).normalized;
             dir.y = 0;
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
 
             if (agent)
             {
-                agent.SetDestination(finalTargetPos);
+                agent.SetDestination(attractionPoint);
                 agent.speed = moveSpeed;
-            }
-            else
-            {
-                transform.position += dir * moveSpeed * Time.deltaTime;
             }
         }
     }
@@ -185,14 +205,21 @@ public class Enemy : MonoBehaviour
 
     IEnumerator PlayDamageAnimation()
     {
-        if (isDead) yield break;
+        if (isDead) yield break; // Prevent any animation if already dead
         isAttacking = true;
-        if (agent) agent.SetDestination(transform.position);
+        if (agent)
+        {
+            agent.isStopped = true; // Stop NavMeshAgent movement
+        }
         animator.SetBool("IsRunning", false);
         animator.SetTrigger("TakeDamage");
 
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
+        if (agent)
+        {
+            agent.isStopped = false; // Resume NavMeshAgent movement
+        }
     }
 
     IEnumerator Die()
@@ -203,7 +230,20 @@ public class Enemy : MonoBehaviour
         isAttracted = false;
         isDrinking = false;
         animator.SetTrigger("Die");
-        if (agent) agent.SetDestination(transform.position);
+
+        // Disable NavMeshAgent
+        if (agent)
+        {
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
+
+        // Disable all colliders
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
 
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
@@ -254,14 +294,23 @@ public class Enemy : MonoBehaviour
     {
         if (isDead) yield break;
         isDrinking = true;
-        if (agent) agent.SetDestination(transform.position);
+        isAttracted = false; // Stop attraction immediately to prevent re-triggering
+        if (agent)
+        {
+            agent.isStopped = true; // Stop movement during animation
+        }
         animator.SetBool("IsRunning", false);
+        animator.SetBool("IsInMeleeRange", false); // Ensure no melee animation interference
         animator.SetTrigger("Drink");
         Debug.Log($"{gameObject.name} set Drink trigger");
 
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(6f);
+
+        if (agent)
+        {
+            agent.isStopped = false; // Resume movement after animation
+        }
         isDrinking = false;
-        isAttracted = false;
         Debug.Log($"{gameObject.name} finished Drink animation");
     }
 
