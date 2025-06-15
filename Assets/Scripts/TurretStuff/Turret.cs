@@ -15,12 +15,15 @@ public class Turret : MonoBehaviour
     private bool isActive = false;
     private float fireCooldown;
     private bool isShooting = false;
-    private Transform currentTarget; // Store target for Animation Event
+    private Transform currentTarget;
 
-    public void Start()
+    void Start()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        // Validate firePoint
+        if (firePoint == null)
+            Debug.LogError("FirePoint is not assigned!", this);
     }
 
     public void Activate()
@@ -53,12 +56,14 @@ public class Turret : MonoBehaviour
 
         if (nearestEnemy != null)
         {
+            // Allow vertical aiming (remove dir.y = 0)
             Vector3 dir = (nearestEnemy.position - transform.position).normalized;
-            dir.y = 0;
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
 
-            // Check if turret is aligned with enemy
+            // Debug: Visualize aiming direction
+            Debug.DrawRay(firePoint.position, firePoint.forward * range, Color.red, 0.1f);
+
             float angleToEnemy = Vector3.Angle(transform.forward, dir);
             if (fireCooldown <= 0f && angleToEnemy < 5f)
             {
@@ -75,16 +80,14 @@ public class Turret : MonoBehaviour
     IEnumerator PlayShootAnimation(Transform target)
     {
         isShooting = true;
-        currentTarget = target; // Store target for Animation Event
+        currentTarget = target;
         animator.Play("shoot");
 
-        // Wait for animation to complete (or use state machine to detect end)
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
         isShooting = false;
     }
 
-    // Called by Animation Event
     void OnShootEvent()
     {
         if (currentTarget == null) return;
@@ -95,14 +98,28 @@ public class Turret : MonoBehaviour
             audioSource.PlayOneShot(shootSFX);
         }
 
-
-        // Fire bullet
+        // Instantiate bullet at firePoint
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 direction = (currentTarget.position - firePoint.position).normalized;
-            rb.linearVelocity = direction * shootPower;
+            // Use firePoint's forward direction for bullet trajectory
+            rb.useGravity = false; // Disable gravity for straight shots
+            rb.linearVelocity = firePoint.forward * shootPower;
+
+            // Debug: Visualize bullet trajectory
+            Debug.DrawRay(firePoint.position, firePoint.forward * range, Color.green, 2f);
         }
+        else
+        {
+            Debug.LogWarning("Bullet prefab is missing Rigidbody component!", bullet);
+        }
+    }
+
+    // Optional: Visualize range in editor
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
