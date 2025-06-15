@@ -1884,7 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00d1ce2eef869143b8eda71c772ac5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   wallSections: []
   healthBar: {fileID: 0}
 --- !u!1 &263127468
@@ -22927,6 +22927,10 @@ PrefabInstance:
     - target: {fileID: 4523697767468400464, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4551698979554473847, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
+      propertyPath: maxHealth
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4953074053554712653, guid: f54e2f4b8e5285d459f80b5cdd959809, type: 3}
       propertyPath: m_Layer
