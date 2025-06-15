@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     private int[] enemiesPerWave = { 3, 6, 12, 18, 24, 32, 40 }; // Enemies per wave
     private float[] spawnRates = { 5f, 4f, 3f, 2.5f, 2f, 1.5f, 1f }; // Spawn rate per wave
     private float[] enemyHealthMultipliers = { 1f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f, 1.6f }; // Health multiplier per wave
-
+    public Animator shopUIAnimator;
     void Start()
     {
         // Find the target object with the "Ring" tag
@@ -72,7 +72,8 @@ public class EnemySpawner : MonoBehaviour
         isWaveActive = true;
         currentEnemyCount = 0;
         Debug.Log($"Starting Wave {currentWave}");
-
+        if (shopUIAnimator != null)
+            shopUIAnimator.SetTrigger("goUp");
         // Calculate enemies for this wave
         int maxEnemiesThisWave = currentWave <= enemiesPerWave.Length
             ? enemiesPerWave[currentWave - 1]
@@ -106,6 +107,9 @@ public class EnemySpawner : MonoBehaviour
 
         isWaveActive = false;
         Debug.Log($"Wave {currentWave} completed!");
+
+        if (shopUIAnimator != null)
+            shopUIAnimator.SetTrigger("goDown");
     }
 
     void SpawnEnemy(float healthMultiplier)

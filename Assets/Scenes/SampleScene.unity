@@ -5604,6 +5604,7 @@ MonoBehaviour:
   - {fileID: 1041711431}
   - {fileID: 1252925214}
   - {fileID: 577599504}
+  shopUIAnimator: {fileID: 9070258920096326729}
 --- !u!4 &711353346
 Transform:
   m_ObjectHideFlags: 0
@@ -25515,6 +25516,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e71c99c59c6594a92ab0e434e1ddd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &9070258920096326729 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8952115175966022150, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
+  m_PrefabInstance: {fileID: 9070258920096326727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
