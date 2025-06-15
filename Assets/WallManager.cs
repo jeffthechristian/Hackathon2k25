@@ -8,7 +8,7 @@ public class WallManager : MonoBehaviour
     public GameObject[] wallSections; // Assign all wall sections in the Inspector
     public Slider healthBar; // Optional: Assign a UI Slider for health bar visualization
 
-    void Start()
+    void OnEnable()
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
