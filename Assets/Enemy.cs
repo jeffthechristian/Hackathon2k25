@@ -260,7 +260,7 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        if (moneyManager != null) moneyManager.AddMoney(10);
+        if (moneyManager != null) moneyManager.AddMoney(50);
         if (spawner != null) spawner.EnemyDied();
         Destroy(gameObject);
     }
