@@ -18,6 +18,8 @@ public class SpawnManager : MonoBehaviour
     public MoneyManager moneyManager;
     public WallUpgrader wallUpgrader;
 
+    public int repairCost = 50; // Cost to repair
+    public int upgradeCost = 100; // Cost to upgrade from Wall1 to Wall2
     public void SpawnByID(int id)
     {
         var match = spawnables.Find(p => p.id == id);
@@ -65,6 +67,55 @@ public class SpawnManager : MonoBehaviour
             prefab.spawnedObjects.RemoveAll(obj => obj == null); // Clean up null references
             Debug.Log($"Spawn count for item ID {prefab.id} decreased to {prefab.spawnCount}.");
         }
+    }
+    public void RepairWall()
+    {
+        if (!moneyManager)
+        {
+            Debug.LogWarning("MoneyManager not assigned.");
+            return;
+        }
+
+        if (!wallUpgrader)
+        {
+            Debug.LogWarning("WallUpgrader not assigned.");
+            return;
+        }
+
+        if (!moneyManager.SpendMoney(repairCost))
+        {
+            Debug.Log("Not enough money to repair the wall.");
+            return;
+        }
+
+        wallUpgrader.EnableWall1();
+        moneyManager.ObjectBought();
+        Debug.Log($"Wall repaired for {repairCost} coins.");
+    }
+
+    public void UpgradeWall()
+    {
+        if (!moneyManager)
+        {
+            Debug.LogWarning("MoneyManager not assigned.");
+            return;
+        }
+
+        if (!wallUpgrader)
+        {
+            Debug.LogWarning("WallUpgrader not assigned.");
+            return;
+        }
+
+        if (!moneyManager.SpendMoney(upgradeCost))
+        {
+            Debug.Log("Not enough money to upgrade the wall.");
+            return;
+        }
+
+        wallUpgrader.UpgradeWall();
+        moneyManager.ObjectBought();
+        Debug.Log($"Wall upgraded for {upgradeCost} coins.");
     }
 }
 
