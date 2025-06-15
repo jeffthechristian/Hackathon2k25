@@ -15,6 +15,8 @@ public class UltimateCharge : MonoBehaviour
     private AudioSource audioSource;
     public PigeonAirstrike airstrike;
 
+    public Transform targetLoc;
+
     void Start()
     {
         if (ultimateObject != null)
@@ -76,7 +78,7 @@ public class UltimateCharge : MonoBehaviour
         if (statusText != null)
             statusText.text = "Not Charged";
 
-        airstrike.LaunchAirstrike(transform);
+        airstrike.LaunchAirstrike(targetLoc);
     }
 
     void PlaySound(AudioClip clip)
