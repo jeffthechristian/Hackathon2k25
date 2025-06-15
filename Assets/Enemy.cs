@@ -85,6 +85,13 @@ public class Enemy : MonoBehaviour
         Vector3 currentTargetPos = isAttracted ? attractionPoint : target.position;
         bool hasPath = HasPathTo(currentTargetPos);
 
+        // Check if wallTarget is invalid (null, disabled, or destroyed)
+        if (wallTarget != null && (wallTarget.gameObject == null || !wallTarget.gameObject.activeSelf))
+        {
+            Debug.Log($"{gameObject.name} wallTarget {wallTarget.name} is invalid, clearing target");
+            wallTarget = null;
+        }
+
         if (!hasPath && wallTarget == null)
         {
             wallTarget = FindNearestWallSection();
@@ -99,7 +106,7 @@ public class Enemy : MonoBehaviour
         float distanceToTarget = Vector3.Distance(transform.position, finalTargetPos);
         bool inMeleeRange = distanceToTarget <= meleeRange;
 
-        // Skip melee attack logic if attracted to an item
+        // Rest of Update logic remains unchanged
         if (!isAttracted)
         {
             animator.SetBool("IsInMeleeRange", inMeleeRange);
@@ -142,9 +149,8 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            // When attracted, just move towards the attraction point
             animator.SetBool("IsRunning", true);
-            animator.SetBool("IsInMeleeRange", false); // Prevent melee animation triggers
+            animator.SetBool("IsInMeleeRange", false);
             Vector3 dir = (attractionPoint - transform.position).normalized;
             dir.y = 0;
             Quaternion lookRot = Quaternion.LookRotation(dir);
@@ -265,6 +271,12 @@ public class Enemy : MonoBehaviour
         {
             WallSection section = attackTarget.GetComponent<WallSection>();
             section.TakeDamage(wallDamage);
+            // Check if wall is destroyed or disabled
+            if (!section.gameObject.activeSelf)
+            {
+                Debug.Log($"{gameObject.name} wallTarget {section.name} destroyed or disabled, clearing target");
+                wallTarget = null;
+            }
         }
 
         if (attackTarget != null && attackTarget.GetComponent<RingLogic>() != null)

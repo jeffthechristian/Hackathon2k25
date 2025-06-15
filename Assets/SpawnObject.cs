@@ -85,18 +85,10 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        // Check if either wall1 or wall2 is already active
-        if (wallUpgrader.wall1 != null && wallUpgrader.wall2 != null)
+        // Check if a wall is already present
+        if (wallUpgrader.HasWall())
         {
-            if (wallUpgrader.wall1.activeSelf || wallUpgrader.wall2.activeSelf)
-            {
-                Debug.Log("Wall repair skipped: Wall1 or Wall2 is already active.");
-                return;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("WallUpgrader: Wall1 or Wall2 is not assigned.");
+            Debug.Log("Wall repair skipped: A wall is already present.");
             return;
         }
 
@@ -106,7 +98,13 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        wallUpgrader.EnableWall1();
+        wallUpgrader.SpawnWall1();
+        // Reset health on the WallManager attached to the new wall
+        var wallManager = wallUpgrader.GetComponentInChildren<WallManager>();
+        if (wallManager != null)
+        {
+            wallManager.ResetHealth();
+        }
         moneyManager.ObjectBought();
         Debug.Log($"Wall repaired for {repairCost} coins.");
     }
@@ -125,10 +123,10 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        // Check if wall2 is already active
-        if (wallUpgrader.wall2 != null && wallUpgrader.wall2.activeSelf)
+        // Check if Wall2 is already present (by checking the current wall type)
+        if (wallUpgrader.HasWall() && wallUpgrader.currentWall.CompareTag("Wall2"))
         {
-            Debug.Log("Wall upgrade skipped: Wall2 is already active.");
+            Debug.Log("Wall upgrade skipped: Wall2 is already present.");
             return;
         }
 
@@ -139,29 +137,13 @@ public class SpawnManager : MonoBehaviour
         }
 
         wallUpgrader.UpgradeWall();
+        // Reset health on the WallManager attached to the new wall
+        var wallManager = wallUpgrader.GetComponentInChildren<WallManager>();
+        if (wallManager != null)
+        {
+            wallManager.ResetHealth();
+        }
         moneyManager.ObjectBought();
         Debug.Log($"Wall upgraded for {upgradeCost} coins.");
-    }
-}
-
-// Script to attach to spawned objects to track their lifecycle
-public class SpawnedObjectTracker : MonoBehaviour
-{
-    private SpawnManager spawnManager;
-    private SpawnManager.SpawnablePrefab prefab;
-
-    public void Initialize(SpawnManager manager, SpawnManager.SpawnablePrefab prefab)
-    {
-        this.spawnManager = manager;
-        this.prefab = prefab;
-    }
-
-    private void OnDestroy()
-    {
-        // Notify SpawnManager when this object is destroyed
-        if (spawnManager != null)
-        {
-            spawnManager.OnObjectRemoved(prefab);
-        }
     }
 }

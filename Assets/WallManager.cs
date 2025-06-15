@@ -1,14 +1,23 @@
 using UnityEngine;
-using UnityEngine.UI; // For UI health bar (optional)
+using UnityEngine.UI;
 
 public class WallManager : MonoBehaviour
 {
     public float maxHealth = 100f;
     private float currentHealth;
-    public GameObject[] wallSections; // Assign all wall sections in the Inspector
     public Slider healthBar; // Optional: Assign a UI Slider for health bar visualization
+    private WallUpgrader wallUpgrader; // Reference to WallUpgrader
 
-    void OnEnable()
+    void Awake()
+    {
+        wallUpgrader = FindObjectOfType<WallUpgrader>();
+        if (wallUpgrader == null)
+        {
+            Debug.LogError("WallManager: WallUpgrader not found in scene!");
+        }
+    }
+
+    void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
@@ -36,6 +45,18 @@ public class WallManager : MonoBehaviour
 
     void DestroyWall()
     {
-        gameObject.SetActive(false);
+        if (wallUpgrader != null)
+        {
+            wallUpgrader.DestroyCurrentWall();
+        }
+        currentHealth = maxHealth; // Reset health for next wall
+        UpdateHealthBar();
+    }
+
+    // Method to reset health when a new wall is spawned
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        UpdateHealthBar();
     }
 }

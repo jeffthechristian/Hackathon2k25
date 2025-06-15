@@ -2,46 +2,75 @@ using UnityEngine;
 
 public class WallUpgrader : MonoBehaviour
 {
-    public GameObject wall1;
-    public GameObject wall2;
+    public GameObject wall1Prefab; // Prefab for Wall1
+    public GameObject wall2Prefab; // Prefab for Wall2
+    public Transform wallSpawnPoint; // Where to spawn the walls
+    public GameObject currentWall; // Track the currently instantiated wall
 
+
+    private void OnEnable()
+    {
+        SpawnWall1();
+    }
     public void UpgradeWall()
     {
-        if (wall1 != null && wall2 != null)
+        if (wall1Prefab == null || wall2Prefab == null || wallSpawnPoint == null)
         {
-            wall1.SetActive(false);
-            wall2.SetActive(true);
-            Debug.Log("Wall upgraded from Wall1 to Wall2");
+            Debug.LogError("WallUpgrader: Wall1Prefab, Wall2Prefab, or WallSpawnPoint is not assigned!");
+            return;
         }
-        else
+
+        // Check if the current wall is Wall1 (by checking its tag)
+        if (currentWall != null && currentWall.CompareTag("Wall1"))
         {
-            Debug.LogError("WallUpgrader: Wall1 or Wall2 is not assigned!");
+            Destroy(currentWall);
+            currentWall = null;
+            Debug.Log("Wall1 destroyed for upgrade");
+        }
+        else if (currentWall != null)
+        {
+            Debug.Log("Upgrade skipped: Current wall is not Wall1");
+            return;
+        }
+
+        // Instantiate Wall2
+        currentWall = Instantiate(wall2Prefab, wallSpawnPoint.position, wallSpawnPoint.rotation);
+        Debug.Log("Wall upgraded to Wall2");
+    }
+
+    public void SpawnWall1()
+    {
+        if (wall1Prefab == null || wallSpawnPoint == null)
+        {
+            Debug.LogError("WallUpgrader: Wall1Prefab or WallSpawnPoint is not assigned!");
+            return;
+        }
+
+        // If there's an existing wall, don't spawn a new one
+        if (currentWall != null)
+        {
+            Debug.Log("Wall1 not spawned: A wall is already present");
+            return;
+        }
+
+        // Instantiate Wall1
+        currentWall = Instantiate(wall1Prefab, wallSpawnPoint.position, wallSpawnPoint.rotation);
+        Debug.Log("Wall1 spawned");
+    }
+
+    public void DestroyCurrentWall()
+    {
+        if (currentWall != null)
+        {
+            Destroy(currentWall);
+            currentWall = null;
+            Debug.Log("Current wall destroyed");
         }
     }
 
-    public void EnableWall1()
+    // Helper method to check if a wall is present
+    public bool HasWall()
     {
-        if (wall1 == null)
-        {
-            Debug.LogError("WallUpgrader: Wall1 is not assigned!");
-            return;
-        }
-
-        if (wall2 == null)
-        {
-            Debug.LogError("WallUpgrader: Wall2 is not assigned!");
-            return;
-        }
-
-        // Only enable wall1 if it is not active and wall2 is not active
-        if (!wall1.activeSelf && !wall2.activeSelf)
-        {
-            wall1.SetActive(true);
-            Debug.Log("Wall1 enabled");
-        }
-        else
-        {
-            Debug.Log("Wall1 not enabled: Either Wall1 is already active or Wall2 is active");
-        }
+        return currentWall != null;
     }
 }

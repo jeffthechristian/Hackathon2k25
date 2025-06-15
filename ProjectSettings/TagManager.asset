@@ -27,6 +27,8 @@ TagManager:
   - QDSUIDestructiveButton
   - Ring
   - Head
+  - Wall1
+  - Wall2
   layers:
   - Default
   - TransparentFX
