@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour
         public int cost;
         public Transform[] spawnPositions = new Transform[4]; // 4 predefined spawn positions
         [HideInInspector] public int spawnCount = 0; // Track how many times it has been spawned
+        [HideInInspector] public List<GameObject> spawnedObjects = new List<GameObject>(); // Track spawned objects
     }
 
     public List<SpawnablePrefab> spawnables = new List<SpawnablePrefab>();
@@ -45,9 +46,46 @@ public class SpawnManager : MonoBehaviour
         }
 
         Transform spawnPos = match.spawnPositions[match.spawnCount]; // Use next available position
-        Instantiate(match.prefab, spawnPos.position, spawnPos.rotation);
-
+        GameObject spawnedObject = Instantiate(match.prefab, spawnPos.position, spawnPos.rotation);
         match.spawnCount++;
+        match.spawnedObjects.Add(spawnedObject); // Track the spawned object
         moneyManager.ObjectBought();
+
+        // Attach a script to the spawned object to notify when it's removed
+        var tracker = spawnedObject.AddComponent<SpawnedObjectTracker>();
+        tracker.Initialize(this, match); // Pass SpawnManager and SpawnablePrefab to the tracker
+    }
+
+    // Called when a spawned object is removed
+    public void OnObjectRemoved(SpawnablePrefab prefab)
+    {
+        if (prefab.spawnCount > 0)
+        {
+            prefab.spawnCount--; // Decrease spawn count
+            prefab.spawnedObjects.RemoveAll(obj => obj == null); // Clean up null references
+            Debug.Log($"Spawn count for item ID {prefab.id} decreased to {prefab.spawnCount}.");
+        }
+    }
+}
+
+// Script to attach to spawned objects to track their lifecycle
+public class SpawnedObjectTracker : MonoBehaviour
+{
+    private SpawnManager spawnManager;
+    private SpawnManager.SpawnablePrefab prefab;
+
+    public void Initialize(SpawnManager manager, SpawnManager.SpawnablePrefab prefab)
+    {
+        this.spawnManager = manager;
+        this.prefab = prefab;
+    }
+
+    private void OnDestroy()
+    {
+        // Notify SpawnManager when this object is destroyed
+        if (spawnManager != null)
+        {
+            spawnManager.OnObjectRemoved(prefab);
+        }
     }
 }
