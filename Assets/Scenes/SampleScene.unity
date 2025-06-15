@@ -26397,6 +26397,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5739494788192084612, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
+      propertyPath: spawnables.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 636432503789273135, guid: 31a9789a48ff6a548aaf50a763a90313, type: 3}
     - target: {fileID: 5774426547338257704, guid: 70e8c669b58183d499770ecec0db6509, type: 3}
       propertyPath: m_Name
       value: ShopUI
