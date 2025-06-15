@@ -21,14 +21,6 @@ public class PigeonAirstrike : MonoBehaviour
     [Header("Target")]
     public Transform targetObject;
 
-    void Start()
-    {
-        if (targetObject != null)
-        {
-            LaunchAirstrike(targetObject);
-        }
-    }
-
     public void LaunchAirstrike(Transform target)
     {
         Vector3 toTarget = target.position - transform.position;

@@ -15,6 +15,7 @@ public class SpawnManager : MonoBehaviour
 
     public List<SpawnablePrefab> spawnables = new List<SpawnablePrefab>();
     public MoneyManager moneyManager;
+    public WallUpgrader wallUpgrader;
 
     public void SpawnByID(int id)
     {
